@@ -36,11 +36,4 @@ public class FoodPersistenceAdapter implements FoodPersistencePort {
                 .vegetable(foodDto.isVegetable())
                 .build();
     }
-
-//    @PostConstruct
-//    void postconstruct() {
-//        FoodEntity foodEntity = FoodEntity.builder().name("asd").vegetable(true).build();
-//        Mono<FoodEntity> foodEntityMono = foodRepository.save(foodEntity);
-//        System.out.println("done");
-//    }
 }

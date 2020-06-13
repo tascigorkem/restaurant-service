@@ -9,7 +9,6 @@ import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.r2dbc.core.DatabaseClient;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -56,7 +55,6 @@ class FoodRepositoryIntegrationTest {
         );
     }
 
-
     @Test
     void givenFoodId_whenCreateFoodTwiceSameId_thenFails() {
         // arrange
@@ -65,15 +63,17 @@ class FoodRepositoryIntegrationTest {
         LocalDateTime now = DateUtil.getInstance().convertToLocalDateTime(new Date());
 
         // prepare db, insert first entity
-        foodRepository.save(FoodEntity.builder()
-                .id(fakeFoodId)
-                .creationTime(now)
-                .updateTime(now)
-                .status(Status.CREATED)
-                .deleted(false)
-                .name(fakeFoodDto.getName())
-                .vegetable(fakeFoodDto.isVegetable())
-                .build()).block();
+        foodRepository.deleteAll().then(
+                foodRepository.save(FoodEntity.builder()
+                        .id(fakeFoodId)
+                        .creationTime(now)
+                        .updateTime(now)
+                        .status(Status.CREATED)
+                        .deleted(false)
+                        .name(fakeFoodDto.getName())
+                        .vegetable(fakeFoodDto.isVegetable())
+                        .build())
+        ).block();
 
         // act
         // insert second entity
@@ -91,6 +91,46 @@ class FoodRepositoryIntegrationTest {
         // assert
         assertThrows(DataIntegrityViolationException.class, createFood);
 
+    }
+
+    @Test
+    void testFoodFields() {
+        // arrange
+        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
+        LocalDateTime now = DateUtil.getInstance().convertToLocalDateTime(new Date());
+
+        // prepare db, insert first entity
+
+        FoodEntity insertedFood = FoodEntity.builder()
+                .id(fakeFoodId)
+                .creationTime(now)
+                .updateTime(now)
+                .status(Status.CREATED)
+                .deleted(false)
+                .name(fakeFoodDto.getName())
+                .vegetable(fakeFoodDto.isVegetable())
+                .build();
+
+        foodRepository.deleteAll()
+                .then(foodRepository.save(insertedFood))
+                .block();
+
+        // act
+        Mono<FoodEntity> result = foodRepository.findById(fakeFoodId);
+        FoodEntity foodEntity = result.block();
+
+        // assert
+        assertAll(
+                () -> assertEquals(insertedFood.getId(), foodEntity.getId()),
+                () -> assertEquals(insertedFood.getCreationTime(), foodEntity.getCreationTime()),
+                () -> assertEquals(insertedFood.getUpdateTime(), foodEntity.getUpdateTime()),
+                () -> assertEquals(insertedFood.getStatus(), foodEntity.getStatus()),
+                () -> assertEquals(insertedFood.getDeletionTime(), foodEntity.getDeletionTime()),
+                () -> assertEquals(insertedFood.isDeleted(), foodEntity.isDeleted()),
+                () -> assertEquals(insertedFood.getName(), foodEntity.getName()),
+                () -> assertEquals(insertedFood.isVegetable(), foodEntity.isVegetable())
+        );
     }
 
 }

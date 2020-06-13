@@ -2,18 +2,22 @@ package com.tascigorkem.restaurantservice.infrastructure.food;
 
 import com.tascigorkem.restaurantservice.infrastructure.base.BaseEntity;
 import com.tascigorkem.restaurantservice.infrastructure.base.Status;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Getter
-@Setter
 @Table("food")
 public class FoodEntity extends BaseEntity {
+
+    @Column("name")
+    private String name;
+    @Column("vegetable")
+    private boolean vegetable;
 
     @Builder
     public FoodEntity(LocalDateTime creationTime, LocalDateTime updateTime, Status status, boolean deleted, LocalDateTime deletionTime, UUID id, String name, boolean vegetable) {
@@ -21,11 +25,5 @@ public class FoodEntity extends BaseEntity {
         this.name = name;
         this.vegetable = vegetable;
     }
-
-    @Column("name")
-    private String name;
-
-    @Column("vegetable")
-    private boolean vegetable;
 
 }

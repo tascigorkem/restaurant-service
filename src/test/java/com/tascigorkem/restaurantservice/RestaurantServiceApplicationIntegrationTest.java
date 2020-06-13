@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RestaurantServiceApplicationTests {
+class RestaurantServiceApplicationIntegrationTest {
 
-	@Test
-	void contextLoads() {
-	}
-
+    @Test
+    void main() {
+        RestaurantServiceApplication.main(new String[]{});
+    }
 }
