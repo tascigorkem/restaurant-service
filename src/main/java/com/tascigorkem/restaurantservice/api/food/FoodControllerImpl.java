@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Slf4j
 @RestController
 public class FoodControllerImpl implements FoodController {
@@ -16,7 +18,7 @@ public class FoodControllerImpl implements FoodController {
     }
 
     @Override
-    public Mono<FoodControllerResponseDto> getFoodById(Long id) {
+    public Mono<FoodControllerResponseDto> getFoodById(UUID id) {
         return foodService.getFoodById(id)
                 .map(foodDto ->
                         FoodControllerResponseDto.builder()

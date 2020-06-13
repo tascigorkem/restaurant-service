@@ -5,20 +5,20 @@ import com.tascigorkem.restaurantservice.domain.food.FoodPersistencePort;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import javax.annotation.PostConstruct;
+import java.util.UUID;
 
 @Service
-public class FoodJpaAdapter implements FoodPersistencePort {
+public class FoodPersistenceAdapter implements FoodPersistencePort {
 
     private final FoodRepository foodRepository;
 
-    public FoodJpaAdapter(FoodRepository foodRepository) {
+    public FoodPersistenceAdapter(FoodRepository foodRepository) {
         this.foodRepository = foodRepository;
     }
 
     @Override
-    public Mono<FoodDto> getFoodById(Long fakeFoodId) {
-        return foodRepository.findById(fakeFoodId).map(this::mapToFoodDto);
+    public Mono<FoodDto> getFoodById(UUID id) {
+        return foodRepository.findById(id).map(this::mapToFoodDto);
     }
 
     protected FoodDto mapToFoodDto(FoodEntity foodEntity) {
@@ -29,14 +29,13 @@ public class FoodJpaAdapter implements FoodPersistencePort {
                 .build();
     }
 
-    protected FoodEntity mapToFoodEntity(FoodDto fakeFoodDto) {
+    protected FoodEntity mapToFoodEntity(FoodDto foodDto) {
         return FoodEntity.builder()
-                .id(fakeFoodDto.getId())
-                .name(fakeFoodDto.getName())
-                .vegetable(fakeFoodDto.isVegetable())
+                .id(foodDto.getId())
+                .name(foodDto.getName())
+                .vegetable(foodDto.isVegetable())
                 .build();
     }
-
 
 //    @PostConstruct
 //    void postconstruct() {

@@ -3,6 +3,8 @@ package com.tascigorkem.restaurantservice.domain.food;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Service
 public class FoodServiceImpl implements FoodService {
 
@@ -13,7 +15,7 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Mono<FoodDto> getFoodById(Long id) {
+    public Mono<FoodDto> getFoodById(UUID id) {
         return foodPersistencePort.getFoodById(id);
     }
 }

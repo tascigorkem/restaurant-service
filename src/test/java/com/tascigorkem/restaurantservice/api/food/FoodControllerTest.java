@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -30,7 +32,7 @@ class FoodControllerTest {
     @Test
     void getFood() {
         // arrange
-        Long id = 1L;
+        UUID id = UUID.randomUUID();
         FoodDto fakeFoodDto = getFakeFoodDto(id);
         when(foodService.getFoodById(id)).thenReturn(Mono.just(fakeFoodDto));
 
@@ -50,7 +52,7 @@ class FoodControllerTest {
 
     }
 
-    private FoodDto getFakeFoodDto(Long id) {
+    private FoodDto getFakeFoodDto(UUID id) {
         return new FoodDto(
                     id,
                     faker.name().firstName(),

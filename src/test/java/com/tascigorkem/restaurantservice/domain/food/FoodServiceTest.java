@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.util.UUID;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -20,7 +22,7 @@ class FoodServiceTest {
     @Test
     void getFoodById() {
         // arrange
-        Long fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         when(foodPersistencePort.getFoodById(fakeFoodId)).thenReturn(Mono.just(fakeFoodDto));
 
