@@ -6,8 +6,14 @@ import reactor.core.publisher.Mono;
 @Service
 public class FoodServiceImpl implements FoodService {
 
+    private final FoodPersistencePort foodPersistencePort;
+
+    public FoodServiceImpl(FoodPersistencePort foodPersistencePort) {
+        this.foodPersistencePort = foodPersistencePort;
+    }
+
     @Override
     public Mono<FoodDto> getFoodById(Long id) {
-        return Mono.empty();
+        return foodPersistencePort.getFoodById(id);
     }
 }

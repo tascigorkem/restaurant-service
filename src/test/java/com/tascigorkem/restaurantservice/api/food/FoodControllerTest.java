@@ -1,4 +1,4 @@
-package com.tascigorkem.restaurantservice.api;
+package com.tascigorkem.restaurantservice.api.food;
 
 import com.github.javafaker.Faker;
 import com.tascigorkem.restaurantservice.api.food.FoodControllerResponseDto;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @WebFluxTest
-public class FoodControllerTest {
+class FoodControllerTest {
 
     @Autowired
     private WebTestClient client;
@@ -29,20 +29,23 @@ public class FoodControllerTest {
 
     @Test
     void getFood() {
+        // arrange
         Long id = 1L;
         FoodDto fakeFoodDto = getFakeFoodDto(id);
         when(foodService.getFoodById(id)).thenReturn(Mono.just(fakeFoodDto));
 
+        // act
         client.get().uri("/food/" + id)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
+
                 // assert
                 .expectStatus().isOk()
                 .expectBody(FoodControllerResponseDto.class)
                 .value(dto -> assertAll(
                         () -> assertEquals(dto.getId(), id),
                         () -> assertEquals(dto.getName(), fakeFoodDto.getName()),
-                        () -> assertEquals(fakeFoodDto.isVegetable(), fakeFoodDto.isVegetable())
+                        () -> assertEquals(dto.isVegetable(), fakeFoodDto.isVegetable())
                 ));
 
     }
