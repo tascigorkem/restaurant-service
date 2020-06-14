@@ -25,4 +25,9 @@ RESTful Service with Spring Boot
 </a>
 
 http://localhost:8080/api-docs
+
 http://localhost:8080/swagger-ui.html
+
+https://cb-restaurant-service-staging.herokuapp.com/
+
+https://cb-restaurant-service-prod.herokuapp.com/
