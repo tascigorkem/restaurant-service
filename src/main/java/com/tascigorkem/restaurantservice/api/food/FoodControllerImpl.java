@@ -1,9 +1,12 @@
 package com.tascigorkem.restaurantservice.api.food;
 
+import com.tascigorkem.restaurantservice.api.response.Response;
+import com.tascigorkem.restaurantservice.domain.exception.FoodNotFoundException;
 import com.tascigorkem.restaurantservice.domain.food.FoodService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
@@ -20,7 +23,7 @@ public class FoodControllerImpl implements FoodController {
     }
 
     @Override
-    public Mono<ResponseEntity> getFoodById(UUID id) {
+    public Mono<Response> getFoodById(UUID id) {
         return foodService.getFoodById(id)
                 .map(foodDto ->
                         FoodControllerResponseDto.builder()
@@ -28,7 +31,11 @@ public class FoodControllerImpl implements FoodController {
                                 .name(foodDto.getName())
                                 .vegetable(foodDto.isVegetable())
                                 .build())
-                .map(foodDto -> ResponseEntity.status(HttpStatus.OK).body(foodDto))
-                .cast(ResponseEntity.class);
+                .map(foodDto -> Response.ok().setPayload(foodDto))
+                .cast(Response.class)
+                .switchIfEmpty(Mono.just(
+                        Response.notFound().setPayload(
+                                new FoodNotFoundException("id", id.toString()).getMessage())
+                ));
     }
 }

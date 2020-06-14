@@ -1,6 +1,8 @@
 package com.tascigorkem.restaurantservice.api.food;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
+import com.tascigorkem.restaurantservice.api.response.Response;
 import com.tascigorkem.restaurantservice.domain.DomainModelFaker;
 import com.tascigorkem.restaurantservice.domain.food.FoodDto;
 import com.tascigorkem.restaurantservice.infrastructure.base.Status;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -22,11 +25,14 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class FoodControllerE2ETest {
+class FoodControllerE2ETest {
 
     private static Faker faker = Faker.instance();
+    private static ObjectMapper objectMapper = new ObjectMapper();
+
     @Autowired
     private ApplicationContext context;
+
     @Autowired
     private FoodRepository foodRepository;
 
@@ -60,13 +66,18 @@ public class FoodControllerE2ETest {
 
                 // assert
                 .expectStatus().isOk()
-                .expectBody(FoodControllerResponseDto.class)
-                .value(dto -> assertAll(
-                        () -> assertEquals(dto.getId(), fakeFoodId),
-                        () -> assertEquals(dto.getName(), fakeFoodDto.getName()),
-                        () -> assertEquals(dto.isVegetable(), fakeFoodDto.isVegetable())
-                ));
+                .expectBody(Response.class)
+                .value(response -> {
+                    FoodControllerResponseDto foodResponseDto = objectMapper
+                            .convertValue(response.getPayload(), FoodControllerResponseDto.class);
 
+                    assertAll(
+                            () -> assertEquals(HttpStatus.OK, response.getStatus()),
+                            () -> assertEquals(fakeFoodId, foodResponseDto.getId()),
+                            () -> assertEquals(fakeFoodDto.getName(), foodResponseDto.getName()),
+                            () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable())
+                    );
+                });
     }
 }
 
