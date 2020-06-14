@@ -25,7 +25,6 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 class FoodControllerIntegrationTest {
 
-    private static Faker faker = Faker.instance();
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired

@@ -27,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 class FoodControllerE2ETest {
 
-    private static Faker faker = Faker.instance();
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
