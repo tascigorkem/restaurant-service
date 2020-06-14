@@ -86,6 +86,7 @@ class FoodControllerTest {
         // arrange
         // act
         // assert
+        assertEquals(true, false);
     }
 
     @Test
