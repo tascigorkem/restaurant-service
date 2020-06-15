@@ -1,7 +1,7 @@
 # .travis.yml
-language: java
-jdk:
-  - openjdk11
+#language: java
+#jdk:
+#  - openjdk11
 services:
   - docker
 
