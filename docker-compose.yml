@@ -13,7 +13,7 @@ services:
     volumes:
       - restaurant-data:/var/lib/postgresql/data
     ports:
-      - "5432:5432" # Forward the exposed port 5433 on the container to port 5432 on the host machine
+      - "5432:5432" # Forward the exposed port 5432 on the container to port 5432 on the host machine
 
     #Environment variable for DB name, user and password
     environment:
@@ -38,7 +38,7 @@ services:
       - restaurant-postgres:restaurant-postgres
     depends_on:
       - restaurant-postgres
-#    command: ["./wait-for-postgres.sh", "restaurant-postgres:5433", "--", "python", "app.py"]
+#    command: ["./wait-for-postgres.sh", "restaurant-postgres:5432", "--", "python", "app.py"]
     networks:
       - main
 
