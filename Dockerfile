@@ -11,12 +11,12 @@ COPY src /build/src
 # Build application
 #RUN mvn package
 RUN mvn package -DskipTests
-
-# Just using the build artifact and then removing the build-container
-FROM openjdk:11-jdk-slim as runtime
-MAINTAINER Gorkem Tasci
-
-#Copy executable jar file from the builder image
-COPY --from=builder /build/target/*.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","app.jar"]
+#
+## Just using the build artifact and then removing the build-container
+#FROM openjdk:11-jdk-slim as runtime
+#MAINTAINER Gorkem Tasci
+#
+##Copy executable jar file from the builder image
+#COPY --from=builder /build/target/*.jar app.jar
+#EXPOSE 8080
+#ENTRYPOINT ["java","-jar","app.jar"]
