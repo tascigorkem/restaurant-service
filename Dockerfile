@@ -1,27 +1,22 @@
-# Docker multi-stage build
-
-# 1. Building the App with Maven
-FROM maven:3-jdk-11
-
-ADD . /restaurantservice
-WORKDIR /restaurantservice
-
-# Just echo so we can see, if everything is there :)
-RUN ls -l
-
-# Run Maven build
-RUN mvn clean install
-
+#### BUILD image
+FROM maven:3-jdk-11 as builder
+# create app folder for sources
+RUN mkdir -p /build
+WORKDIR /build
+COPY pom.xml /build
+#Download all required dependencies into one layer
+RUN mvn -B dependency:resolve dependency:resolve-plugins
+#Copy source code
+COPY src /build/src
+# Build application
+#RUN mvn package
+RUN mvn package -DskipTests
 
 # Just using the build artifact and then removing the build-container
-FROM openjdk:11-jdk
-
+FROM openjdk:11-jdk-slim as runtime
 MAINTAINER Gorkem Tasci
 
-VOLUME /tmp
-
-# Add Spring Boot app.jar to Container
-COPY --from=0 "/restaurant-service/target/restaurant-service-*-SNAPSHOT.jar" app.jar
-
-# Fire up our Spring Boot app by default
-CMD [ "sh", "-c", "java -Dserver.port=$PORT -Xmx300m -Xss512k -XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -XX:+UseContainerSupport -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
+#Copy executable jar file from the builder image
+COPY --from=builder /build/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","app.jar"]

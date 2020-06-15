@@ -1,0 +1,58 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+version: '3.8'
+
+#Define services
+services:
+
+  #PostgreSQL Database for the application
+  restaurant-postgres:
+    image: "postgres:13"
+    restart: always
+    container_name: restaurant-postgres
+    #Volume mounted for database for the storage
+    volumes:
+      - restaurant-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432" # Forward the exposed port 5433 on the container to port 5432 on the host machine
+
+    #Environment variable for DB name, user and password
+    environment:
+      - POSTGRES_DB=restaurant_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+
+    networks:
+      - main
+
+  #Back-end Spring Boot Application
+  restaurant-service:
+    #The docker file in restaurant-service build the jar and provides the docker image with the following name.
+    build: .
+    restart: always
+    container_name: restaurant-service
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    links:
+      - restaurant-postgres:restaurant-postgres
+    depends_on:
+      - restaurant-postgres
+#    command: ["./wait-for-postgres.sh", "restaurant-postgres:5433", "--", "python", "app.py"]
+    networks:
+      - main
+
+    #Environment variables for Spring Boot Application.
+#    environment:
+#      - DB_SERVER=restaurant-postgres
+#      - POSTGRES_DB=restaurant_db
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=password
+
+#Volumes for DB data
+volumes:
+  restaurant-data:
+
+networks:
+  main:
+    driver: bridge

@@ -1,10 +1,3 @@
--- Status Enum
-drop type status_type;
-
-create type status_type as enum ('CREATED', 'UPDATED');
-
-alter type status_type owner to postgres;
-
 -- Food Table
 drop table food;
 
