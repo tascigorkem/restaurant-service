@@ -1,14 +1,14 @@
 # .travis.yml
-#language: java
-#jdk:
-#  - openjdk11
+sudo: required
+language: java
+jdk:
+  - openjdk11
 services:
   - docker
 
 
 env:
   global:
-    - DOCKER_VERSION=1.10.1-0~trusty
     - DOCKER_COMPOSE_VERSION=1.4.2
     - IMAGE_NAME=restaurant-service
     - HEROKU_API_KEY=0ef60806-3929-42d7-a444-ad12f1ae0b9a
@@ -16,12 +16,6 @@ env:
 #    - DOCKER_PASS=
 
 before_install:
-  # list docker-engine versions
-  - apt-cache madison docker-engine
-
-  # upgrade docker-engine to specific version
-  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=${DOCKER_VERSION}
-
   # reinstall docker-compose at specific version
   - sudo rm -f /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
@@ -30,23 +24,22 @@ before_install:
 
 
 before_script:
-  - docker version
-  - docker-compose version
 
 script:
-  - docker-compose up --build
-#  - docker-compose exec users python manage.py test
-#  - docker-compose exec users black project
-#  - docker-compose exec users flake8 project
+  - ./mvnw clean install -B -DskipTests
 
-after_script:
-  - docker-compose down
+#after_success:
+#  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+#  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH&amp;amp;amp;amp;amp;amp;amp;lt;span data-mce-type="bookmark" style="display: inline-block; width: 0px; overflow: hidden; line-height: 0;" class="mce_SELRES_start"&amp;amp;amp;amp;amp;amp;amp;gt;&amp;amp;amp;amp;amp;amp;amp;lt;/span&amp;amp;amp;amp;amp;amp;amp;gt;; fi`
+#  - export IMAGE_NAME=sivaprasadreddy/jblogger
+#  - docker build -t $IMAGE_NAME:$COMMIT .
+#  - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
+#  - docker push $IMAGE_NAME
 
-#deploy:
-#  provider: heroku
-#  api-key:
-#    secure: "$HEROKU_API_KEY"
-#  app: cb-restaurant-service
-#  on:
-#    tags: true
-#    repo: "$IMAGE_NAME"
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API_KEY
+  app: cb-restaurant-service
+  on:
+    tags: true
+    repo: "$IMAGE_NAME"
