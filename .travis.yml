@@ -1,8 +1,30 @@
+# .travis.yml
+language: java
+jdk:
+  - openjdk11
+services:
+  - docker
+
+
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  global:
+    - DOCKER_COMPOSE_VERSION=1.4.2
+    - IMAGE_NAME=restaurant-service
+    - HEROKU_API_KEY=0ef60806-3929-42d7-a444-ad12f1ae0b9a
+    - DOCKER_USER=tascigorkem
+    - DOCKER_PASS=
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+
+deploy:
+  provider: heroku
+  api-key:
+    secure: "$HEROKU_API_KEY"
+  app: my-restaurant-service
+  on:
+    tags: true
+    repo: "$IMAGE_NAME"
