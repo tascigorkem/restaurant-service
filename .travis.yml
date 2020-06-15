@@ -22,8 +22,8 @@ before_install:
 
 
 before_script:
-  - docker-compose down
-  - docker-compose down
+  - docker-compose stop
+  - docker-compose stop
   - docker-compose up --build --force-recreate
 
 #script:
