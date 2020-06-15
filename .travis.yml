@@ -11,7 +11,7 @@ env:
   global:
     - DOCKER_COMPOSE_VERSION=1.4.2
     - IMAGE_NAME=restaurant-service
-    - REPO_NAME=restaurant-service
+    - REPO_NAME=tascigorkem/restaurant-service
     - HEROKU_API_KEY=0ef60806-3929-42d7-a444-ad12f1ae0b9a
 #    - DOCKER_USER=tascigorkem
 #    - DOCKER_PASS=
