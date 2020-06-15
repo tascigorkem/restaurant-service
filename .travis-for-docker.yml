@@ -3,6 +3,8 @@ sudo: required
 language: java
 jdk:
   - openjdk11
+services:
+  - docker
 
 env:
   global:
@@ -11,8 +13,9 @@ env:
     - REPO_NAME=tascigorkem/restaurant-service
     - HEROKU_API_KEY=0ef60806-3929-42d7-a444-ad12f1ae0b9a
 
-script:
-  - ./mvnw clean install -B -DskipTests
+before_install:
+  - docker build -f Dockerfile -t ${IMAGE_NAME} .
+  - docker run -p 8080:8080 ${IMAGE_NAME}
 
 deploy:
   provider: heroku
