@@ -11,16 +11,17 @@ env:
   global:
     - DOCKER_COMPOSE_VERSION=1.4.2
     - IMAGE_NAME=restaurant-service
+    - REPO_NAME=restaurant-service
     - HEROKU_API_KEY=0ef60806-3929-42d7-a444-ad12f1ae0b9a
 #    - DOCKER_USER=tascigorkem
 #    - DOCKER_PASS=
 
 before_install:
-  # reinstall docker-compose at specific version
-  - sudo rm -f /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
+# reinstall docker-compose at specific version
+#  - sudo rm -f /usr/local/bin/docker-compose
+#  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+#  - chmod +x docker-compose
+#  - sudo mv docker-compose /usr/local/bin
 
 
 before_script:
@@ -42,4 +43,5 @@ deploy:
   app: cb-restaurant-service
   on:
     tags: true
-    repo: "$IMAGE_NAME"
+    repo: "$REPO_NAME"
+    branch: master
