@@ -8,6 +8,7 @@ services:
 
 env:
   global:
+    - DOCKER_VERSION=1.10.1-0~trusty
     - DOCKER_COMPOSE_VERSION=1.4.2
     - IMAGE_NAME=restaurant-service
     - HEROKU_API_KEY=0ef60806-3929-42d7-a444-ad12f1ae0b9a
@@ -15,16 +16,25 @@ env:
 #    - DOCKER_PASS=
 
 before_install:
-  - sudo rm /usr/local/bin/docker-compose
+  # list docker-engine versions
+  - apt-cache madison docker-engine
+
+  # upgrade docker-engine to specific version
+  - sudo apt-get -o Dpkg::Options::="--force-confnew" install -y docker-engine=${DOCKER_VERSION}
+
+  # reinstall docker-compose at specific version
+  - sudo rm -f /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
 
 before_script:
-  - docker-compose up --build
+  - docker version
+  - docker-compose version
 
-#script:
+script:
+  - docker-compose up --build
 #  - docker-compose exec users python manage.py test
 #  - docker-compose exec users black project
 #  - docker-compose exec users flake8 project
