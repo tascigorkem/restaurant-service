@@ -23,6 +23,7 @@ before_install:
 
 before_script:
   - docker-compose down
+  - docker-compose down
   - docker-compose up --build --force-recreate
 
 #script:
