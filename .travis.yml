@@ -22,9 +22,7 @@ before_install:
 
 
 before_script:
-  - docker-compose stop
-  - docker-compose stop
-  - docker-compose up --build --force-recreate
+  - docker-compose up --build
 
 #script:
 #  - docker-compose exec users python manage.py test
