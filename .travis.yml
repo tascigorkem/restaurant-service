@@ -27,7 +27,7 @@ before_install:
 before_script:
 
 script:
-  - ./mvnw clean install -B
+  - ./mvnw clean install -B -DskipTests
 
 #after_success:
 #  - docker login -u $DOCKER_USER -p $DOCKER_PASS
