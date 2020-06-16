@@ -10,7 +10,7 @@ RUN mvn -B dependency:resolve dependency:resolve-plugins
 COPY src /build/src
 # Build application
 #RUN mvn package
-RUN mvn package -DskipTests
+RUN mvn package -DskipITs
 
 # Just using the build artifact and then removing the build-container
 FROM openjdk:11-jdk-slim as runtime

@@ -113,7 +113,7 @@
             <version>1.2.32</version>
         </dependency>
 
-        <!-- Dependencies for Zipkin -->
+        <!-- Dependencies for Zipkin and Sleuth-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-zipkin</artifactId>-->
