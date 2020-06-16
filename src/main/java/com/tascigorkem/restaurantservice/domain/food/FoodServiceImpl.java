@@ -1,6 +1,7 @@
 package com.tascigorkem.restaurantservice.domain.food;
 
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -15,7 +16,27 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
+    public Flux<FoodDto> getAllFoods() {
+        return Flux.empty();
+    }
+
+    @Override
     public Mono<FoodDto> getFoodById(UUID id) {
         return foodPersistencePort.getFoodById(id);
     }
+
+    @Override
+    public Mono<FoodDto> addFood(FoodDto foodDto) {
+        return null;
+    }
+
+    @Override
+    public void updateFood(FoodDto fakeFoodDto) {
+    }
+
+    @Override
+    public void removeFood(UUID id) {
+
+    }
+
 }
