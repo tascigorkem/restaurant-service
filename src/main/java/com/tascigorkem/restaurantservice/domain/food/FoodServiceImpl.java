@@ -17,7 +17,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Flux<FoodDto> getAllFoods() {
-        return Flux.empty();
+        return foodPersistencePort.getAllFoods();
     }
 
     @Override
@@ -27,16 +27,17 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Mono<FoodDto> addFood(FoodDto foodDto) {
-        return null;
+        return foodPersistencePort.addFood(foodDto);
     }
 
     @Override
-    public void updateFood(FoodDto fakeFoodDto) {
+    public void updateFood(FoodDto foodDto) {
+        foodPersistencePort.updateFood(foodDto);
     }
 
     @Override
     public void removeFood(UUID id) {
-
+        foodPersistencePort.removeFood(id);
     }
 
 }

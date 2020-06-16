@@ -1,26 +1,63 @@
 package com.tascigorkem.restaurantservice.domain.food;
 
+import com.tascigorkem.restaurantservice.api.ApiModelFaker;
+import com.tascigorkem.restaurantservice.api.food.FoodControllerRequestDto;
+import com.tascigorkem.restaurantservice.api.food.FoodControllerResponseDto;
+import com.tascigorkem.restaurantservice.api.response.Response;
 import com.tascigorkem.restaurantservice.domain.DomainModelFaker;
 import com.tascigorkem.restaurantservice.domain.food.FoodDto;
 import com.tascigorkem.restaurantservice.domain.food.FoodPersistencePort;
 import com.tascigorkem.restaurantservice.domain.food.FoodService;
 import com.tascigorkem.restaurantservice.domain.food.FoodServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 class FoodServiceTest {
 
     private final FoodPersistencePort foodPersistencePort = mock(FoodPersistencePort.class);
     private final FoodService subject = new FoodServiceImpl(foodPersistencePort);
 
+    /**
+     * Unit test for FoodService:getAllFoods
+     */
     @Test
-    void getFoodById() {
+    void testGetAllFoods() {
+        // arrange
+        FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(DomainModelFaker.fakeFoodId());
+        List<FoodDto> foodDtoList = Arrays.asList(fakeFoodDto, fakeFoodDto, fakeFoodDto);
+        when(foodPersistencePort.getAllFoods()).thenReturn(Flux.fromIterable(foodDtoList));
+
+        // act
+        Flux<FoodDto> result = subject.getAllFoods();
+
+        //assert
+        StepVerifier.create(result)
+                .expectNext(foodDtoList.get(0))
+                .expectNext(foodDtoList.get(1))
+                .expectNext(foodDtoList.get(2))
+                .expectComplete()
+                .verify();
+
+        verify(foodPersistencePort).getAllFoods();
+    }
+
+    /**
+     * Unit test for FoodService:getFoodById
+     */
+    @Test
+    void givenFoodId_whenGetFood_andFoodExists_thenReturnFood() {
         // arrange
         UUID fakeFoodId = DomainModelFaker.fakeFoodId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
@@ -33,5 +70,59 @@ class FoodServiceTest {
         StepVerifier.create(result)
                 .expectNext(fakeFoodDto)
                 .verifyComplete();
+
+        verify(foodPersistencePort).getFoodById(fakeFoodId);
+
+    }
+
+    /**
+     * Unit test for FoodService:addFood
+     */
+    @Test
+    void givenFoodControllerRequestDto_whenCreateFood_thenReturnSuccessful_andReturnFood() {
+        // arrange
+        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
+        when(foodPersistencePort.addFood(fakeFoodDto)).thenReturn(Mono.just(fakeFoodDto));
+        // act
+        Mono<FoodDto> result = subject.addFood(fakeFoodDto);
+
+        //assert
+
+        StepVerifier.create(result)
+                .expectNext(fakeFoodDto)
+                .verifyComplete();
+
+        verify(foodPersistencePort).addFood(fakeFoodDto);
+    }
+
+
+    /**
+     * Unit test for FoodService:updateFood
+     */
+    @Test
+    void givenFoodId_andFoodDto_whenUpdateFood_andExists_thenReturnSuccessful() {
+        // arrange
+        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
+        // act
+        subject.updateFood(fakeFoodDto);
+
+        //assert
+        verify(foodPersistencePort).updateFood(fakeFoodDto);
+    }
+
+    /**
+     * Unit test for FoodService:removeFood
+     */
+    @Test
+    void givenFoodId_whenRemoveFood_andExists_thenReturnSuccessful() {
+        // arrange
+        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        // act
+        subject.removeFood(fakeFoodId);
+
+        //assert
+        verify(foodPersistencePort).removeFood(fakeFoodId);
     }
 }

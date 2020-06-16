@@ -165,7 +165,7 @@ class FoodControllerTest {
     }
 
     @Test
-    void givenFoodId_andFoodControllerRequestDto_whenUpdateFood_andExists_thenReturnSuccessful() {
+    void givenFoodFoodControllerRequestDto_andFoodControllerRequestDto_whenUpdateFood_andExists_thenReturnSuccessful() {
         // test endpoint FoodController:updateFood
         // arrange
         FoodControllerRequestDto fakeFoodControllerRequestDto = ApiModelFaker.getFoodControllerRequestDto();

@@ -71,6 +71,7 @@ class FoodControllerEnd2EndIT {
                             .convertValue(response.getPayload(), FoodControllerResponseDto.class);
 
                     assertAll(
+                            () -> assertEquals(HttpStatus.OK.value(), response.getStatusCode()),
                             () -> assertEquals(HttpStatus.OK, response.getStatus()),
                             () -> assertEquals(fakeFoodId, foodResponseDto.getId()),
                             () -> assertEquals(fakeFoodDto.getName(), foodResponseDto.getName()),
