@@ -1,1 +1,1 @@
-web: java -jar $JAVA_OPTS target/restaurant-service-0.0.1-SNAPSHOT.jar -Dspring.profiles.active=heroku -Dserver.port=$PORT
+web: java -Dserver.port=$PORT -Dspring.profiles.active=heroku $JAVA_OPTS -jar target/restaurant-service-0.0.1-SNAPSHOT.jar
