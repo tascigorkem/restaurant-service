@@ -12,7 +12,8 @@ env:
     - HEROKU_API_KEY=0ef60806-3929-42d7-a444-ad12f1ae0b9a
 
 script:
-  - ./mvnw clean install -B -DskipTests
+  - ./mvnw clean install -B -DskipITs
+#  - ./mvnw clean install -B -DskipTests
 
 deploy:
   provider: heroku

@@ -5,35 +5,33 @@ import com.github.javafaker.Faker;
 import com.tascigorkem.restaurantservice.api.response.Response;
 import com.tascigorkem.restaurantservice.domain.DomainModelFaker;
 import com.tascigorkem.restaurantservice.domain.food.FoodDto;
-import com.tascigorkem.restaurantservice.infrastructure.base.Status;
-import com.tascigorkem.restaurantservice.infrastructure.food.FoodEntity;
-import com.tascigorkem.restaurantservice.infrastructure.food.FoodRepository;
-import com.tascigorkem.restaurantservice.util.DateUtil;
+import com.tascigorkem.restaurantservice.domain.food.FoodPersistencePort;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Mono;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class FoodControllerE2ETest {
+class FoodControllerIT {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private ApplicationContext context;
 
-    @Autowired
-    private FoodRepository foodRepository;
+    @MockBean
+    private FoodPersistencePort foodPersistencePort;
 
     @Test
     void getFood() {
@@ -42,21 +40,7 @@ class FoodControllerE2ETest {
 
         UUID fakeFoodId = UUID.randomUUID();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
-
-        LocalDateTime now = DateUtil.getInstance().convertToLocalDateTime(new Date());
-
-        // prepare db, delete all entities and insert one entity
-        foodRepository.deleteAll()
-                .then(foodRepository.save(FoodEntity.builder()
-                        .id(fakeFoodId)
-                        .creationTime(now)
-                        .updateTime(now)
-                        .status(Status.CREATED)
-                        .deleted(false)
-                        .name(fakeFoodDto.getName())
-                        .vegetable(fakeFoodDto.isVegetable())
-                        .build()))
-                .block();
+        when(foodPersistencePort.getFoodById(fakeFoodId)).thenReturn(Mono.just(fakeFoodDto));
 
         // act
         client.get().uri("/foods/" + fakeFoodId)
@@ -77,6 +61,6 @@ class FoodControllerE2ETest {
                             () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable())
                     );
                 });
+
     }
 }
-

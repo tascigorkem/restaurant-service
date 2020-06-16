@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @SpringBootTest
-class FoodServiceIntegrationTest {
+class FoodServiceIT {
 
     @Autowired
     private FoodRepository foodRepository;
