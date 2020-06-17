@@ -68,7 +68,7 @@ for unit tests and integration tests.
 
 ## Docs
 
-Docs in ./docs.
+Docs located ./docs folder in project main folder.
 
 #### Swagger & Api-Docs
 
@@ -78,14 +78,13 @@ https://cb-restaurant-service.herokuapp.com/swagger-ui.html
 
 https://cb-restaurant-service.herokuapp.com/api-docs
 
-<img src="./docs/add-food-request.png" alt="" width="500">
-<img src="./docs/get-all-foods-request.png" alt="" width="500">
-<img src="./docs/javadoc.png" alt="javadoc" width="500">
+<img src="./docs/add-food-request.png" alt="" width="800">
+<img src="./docs/get-all-foods-request.png" alt="" width="800">
 
 
 #### javadoc
 
 Run `mvn javadoc:javadoc` for create javadocs.
 
-<img src="./docs/javadoc.png" alt="javadoc" width="500">
+<img src="./docs/javadoc.png" alt="javadoc" width="800">
 
