@@ -24,7 +24,7 @@ This application developed with Spring WebFlux and R2DBC in Spring Boot.
 
 ### Hexagonal architecture
 
-Used hexagonal architecture for this project.
+Used hexagonal architecture with TDD for this project.
 
 Example Flow:
 
@@ -38,11 +38,29 @@ CompanyPersistencePort (I) -> CompanyPersistenceAdapter
 
 <img src="./docs/project-structure.png" alt="project-structure" width="400">
 
+## Tests
 
-<div align="center">
-<h4>Test Coverage</h4>
-  <img src="./docs/test-coverege.png" alt="test-coverege" width="400">
-</div>
+Run Integration Tests: `mvn integration-test` (**/*IT.class)
+
+Run Unit Tests: `mvn test` (**/*Test.class)
+
+#### Test Pattern
+
+Used 
+
+* 3A (Arrange, Act, Assert) pattern 
+
+* Given, When, Then pattern
+
+for unit tests and integration tests.
+
+<img src="./docs/unit-test.png" alt="unit-test" width="500">
+
+#### Test Coverage
+
+98% classes, 96% lines covered in project.
+
+<img src="./docs/test-coverege.png" alt="test-coverege" width="500">
 
 http://localhost:8080/api-docs
 
