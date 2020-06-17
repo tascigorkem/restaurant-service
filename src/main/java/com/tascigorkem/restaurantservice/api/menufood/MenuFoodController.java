@@ -11,6 +11,25 @@ import java.util.function.Function;
 
 public interface MenuFoodController {
 
+    /**
+     * Handles the incoming GET request "/menus/foods"
+     *
+     * @return retrieve all non-deleted foods with related menu ids
+     *
+     * @see com.tascigorkem.restaurantservice.api.menufood.MenuFoodControllerResponseDto
+     */
+    @GetMapping("/menus/foods")
+    Mono<Response> getAllMenuFoods();
+
+    /**
+     * Handles the incoming GET request "/menus/{menuId}/foods/{foodId}"
+     *
+     * @param menuId of the menu to be retrieved
+     * @param foodId of the food to be retrieved
+     * @return retrieve food with menu id
+     *
+     * @see com.tascigorkem.restaurantservice.api.menufood.MenuFoodControllerResponseDto
+     */
     @GetMapping("/menus/{menuId}/foods/{foodId}")
     Mono<Response> getFoodPriceInfoByMenuId(@PathVariable("menuId") UUID menuId, @PathVariable("foodId") UUID foodId);
 

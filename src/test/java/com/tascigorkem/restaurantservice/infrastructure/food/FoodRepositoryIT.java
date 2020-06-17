@@ -47,6 +47,8 @@ class FoodRepositoryIT {
                 .deleted(false)
                 .name(fakeFoodDto1.getName())
                 .vegetable(fakeFoodDto1.isVegetable())
+                .price(fakeFoodDto1.getPrice())
+                .imageUrl(fakeFoodDto1.getImageUrl())
                 .build();
         FoodEntity foodEntity2 = FoodEntity.builder()
                 .id(fakeFoodId2)
@@ -56,6 +58,8 @@ class FoodRepositoryIT {
                 .deleted(false)
                 .name(fakeFoodDto2.getName())
                 .vegetable(fakeFoodDto2.isVegetable())
+                .price(fakeFoodDto2.getPrice())
+                .imageUrl(fakeFoodDto2.getImageUrl())
                 .build();
         FoodEntity foodEntity3 = FoodEntity.builder()
                 .id(fakeFoodId3)
@@ -65,6 +69,8 @@ class FoodRepositoryIT {
                 .deleted(false)
                 .name(fakeFoodDto3.getName())
                 .vegetable(fakeFoodDto3.isVegetable())
+                .price(fakeFoodDto3.getPrice())
+                .imageUrl(fakeFoodDto3.getImageUrl())
                 .build();
 
         // prepare db, delete all entities and insert three foods

@@ -1,8 +1,18 @@
-drop table menu_food cascade;
-drop table food cascade;
-drop table menu cascade;
-drop table restaurant cascade;
-drop table company cascade;
+-- -- Drops
+-- drop table menu_food cascade;
+-- drop table food cascade;
+-- drop table menu cascade;
+-- drop table restaurant cascade;
+-- drop table company cascade;
+--
+-- -- Roles
+-- alter table companyowner to postgres;
+-- alter table restaurant owner to postgres;
+-- alter table menu owner to postgres;
+-- alter table food owner to postgres;
+-- alter table menu_food owner to postgres;
+
+-- Creations
 
 -- Company Table
 create table if not exists company
@@ -21,9 +31,6 @@ create table if not exists company
     email_address varchar(50),
     website_url   varchar(255)
 );
-
-alter table company
-    owner to postgres;
 
 -- Restaurant Table
 create table if not exists restaurant
@@ -46,9 +53,6 @@ create table if not exists restaurant
             on update cascade on delete cascade
 );
 
-alter table restaurant
-    owner to postgres;
-
 -- Menu Table
 create table menu
 (
@@ -68,9 +72,6 @@ create table menu
             on update cascade on delete cascade
 );
 
-alter table menu
-    owner to postgres;
-
 
 -- Food Table
 create table if not exists food
@@ -88,9 +89,6 @@ create table if not exists food
     price         numeric,
     image_url     varchar(255)
 );
-
-alter table food
-    owner to postgres;
 
 -- Menu - Food Relation Table
 create table menu_food
@@ -114,7 +112,3 @@ create table menu_food
             references food
             on update cascade on delete cascade
 );
-
-alter table menu_food
-    owner to postgres;
-

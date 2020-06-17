@@ -1,6 +1,7 @@
 package com.tascigorkem.restaurantservice.domain.menufood;
 
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -13,6 +14,11 @@ public class MenuFoodServiceImpl implements MenuFoodService {
 
     public MenuFoodServiceImpl(MenuFoodPersistencePort menuFoodPersistencePort) {
         this.menuFoodPersistencePort = menuFoodPersistencePort;
+    }
+
+    @Override
+    public Flux<MenuFoodDto> getAllMenuFoods() {
+        return menuFoodPersistencePort.getAllMenuFoods();
     }
 
     @Override

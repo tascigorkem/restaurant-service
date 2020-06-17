@@ -5,6 +5,7 @@ import com.tascigorkem.restaurantservice.domain.menufood.MenuFoodDto;
 import com.tascigorkem.restaurantservice.domain.menufood.MenuFoodPersistencePort;
 import com.tascigorkem.restaurantservice.infrastructure.food.FoodRepository;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -18,6 +19,18 @@ public class MenuFoodPersistenceAdapter implements MenuFoodPersistencePort {
     public MenuFoodPersistenceAdapter(FoodRepository foodRepository, MenuFoodRepository menuFoodRepository) {
         this.foodRepository = foodRepository;
         this.menuFoodRepository = menuFoodRepository;
+    }
+
+    @Override
+    public Flux<MenuFoodDto> getAllMenuFoods() {
+
+        return menuFoodRepository.findAll().filter(menuFoodEntity -> !menuFoodEntity.isDeleted()).flatMap(menuFoodEntity ->
+                foodRepository.findById(menuFoodEntity.getFoodId()).flatMap(foodEntity -> {
+                    MenuFoodDto menuFoodDto = this.mapToMenuFoodDto(menuFoodEntity);
+                    menuFoodDto.setOriginalPrice(foodEntity.getPrice());
+                    menuFoodDto.setFoodName(foodEntity.getName());
+                    return Mono.just(menuFoodDto);
+                }));
     }
 
     @Override

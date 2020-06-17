@@ -21,6 +21,15 @@ public class MenuFoodControllerImpl implements MenuFoodController {
     }
 
     @Override
+    public Mono<Response> getAllMenuFoods() {
+        return menuFoodService.getAllMenuFoods()
+                .map(mapToMenuControllerResponseDto())
+                .collectList()
+                .map(Response.ok()::setPayload)
+                .cast(Response.class);
+    }
+
+    @Override
     public Mono<Response> getFoodPriceInfoByMenuId(UUID menuId, UUID foodId) {
         return menuFoodService.getFoodPriceInfoByMenuId(menuId, foodId)
                 .map(mapToMenuControllerResponseDto())
