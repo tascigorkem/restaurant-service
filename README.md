@@ -20,9 +20,10 @@ RESTful Service with Spring Boot
     </a>
 </p>
 
-<a href="https://heroku.com/deploy">
-  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-</a>
+<div align="center">
+<h4>Mobile</h4>
+  <img src="./docs/test-coverege.png" alt="test-coverege" width="400">
+</div>
 
 http://localhost:8080/api-docs
 
