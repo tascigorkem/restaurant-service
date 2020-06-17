@@ -1,6 +1,7 @@
 package com.tascigorkem.restaurantservice.api;
 
 import com.github.javafaker.Faker;
+import com.tascigorkem.restaurantservice.api.company.CompanyControllerRequestDto;
 import com.tascigorkem.restaurantservice.api.food.FoodControllerRequestDto;
 
 import java.math.BigDecimal;
@@ -19,7 +20,17 @@ public class ApiModelFaker {
                 .build();
     }
 
-    public static UUID fakeFoodId() {
+    public static CompanyControllerRequestDto getCompanyControllerRequestDto() {
+        return CompanyControllerRequestDto.builder()
+                .name(faker.company().name())
+                .address(faker.address().fullAddress())
+                .phone(faker.phoneNumber().phoneNumber())
+                .emailAddress(faker.internet().emailAddress())
+                .websiteUrl(faker.internet().url())
+                .build();
+    }
+
+    public static UUID fakeId() {
         return UUID.randomUUID();
     }
 }

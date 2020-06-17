@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tascigorkem.restaurantservice.api.ApiModelFaker;
 import com.tascigorkem.restaurantservice.api.response.Response;
 import com.tascigorkem.restaurantservice.domain.DomainModelFaker;
-import com.tascigorkem.restaurantservice.domain.exception.FoodNotFoundException;
 import com.tascigorkem.restaurantservice.domain.food.FoodDto;
 import com.tascigorkem.restaurantservice.domain.food.FoodService;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@WebFluxTest
+@WebFluxTest(FoodController.class)
 class FoodControllerTest {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
@@ -46,7 +45,7 @@ class FoodControllerTest {
     void testGetAllFoods() {
         // test endpoint FoodController:getFoods
         // arrange
-        FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(DomainModelFaker.fakeFoodId());
+        FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(DomainModelFaker.fakeId());
         List<FoodDto> foodDtoList = Arrays.asList(fakeFoodDto, fakeFoodDto, fakeFoodDto);
         when(foodService.getAllFoods()).thenReturn(Flux.fromIterable(foodDtoList));
 

@@ -22,10 +22,14 @@ public class MenuEntity extends BaseEntity {
     @Column("menu_type")
     private String menuType;
 
+    @Column("restaurant_id")
+    private UUID restaurantId;
+
     @Builder
-    public MenuEntity(LocalDateTime creationTime, LocalDateTime updateTime, Status status, LocalDateTime deletionTime, boolean deleted, UUID id, String name, String menuType) {
+    public MenuEntity(LocalDateTime creationTime, LocalDateTime updateTime, Status status, LocalDateTime deletionTime, boolean deleted, UUID id, String name, String menuType, UUID restaurantId) {
         super(creationTime, updateTime, status, deletionTime, deleted, id);
         this.name = name;
         this.menuType = menuType;
+        this.restaurantId = restaurantId;
     }
 }

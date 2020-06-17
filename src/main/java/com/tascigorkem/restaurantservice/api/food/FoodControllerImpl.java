@@ -1,7 +1,6 @@
 package com.tascigorkem.restaurantservice.api.food;
 
 import com.tascigorkem.restaurantservice.api.response.Response;
-import com.tascigorkem.restaurantservice.domain.exception.FoodNotFoundException;
 import com.tascigorkem.restaurantservice.domain.food.FoodDto;
 import com.tascigorkem.restaurantservice.domain.food.FoodService;
 import lombok.extern.slf4j.Slf4j;

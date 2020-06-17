@@ -1,6 +1,5 @@
 package com.tascigorkem.restaurantservice.domain.food;
 
-import com.tascigorkem.restaurantservice.infrastructure.food.FoodEntity;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

@@ -28,7 +28,7 @@ class FoodServiceIT {
     @Test
     void getFoodById() {
         // arrange
-        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
 
         LocalDateTime now = DateUtil.getInstance().convertToLocalDateTime(new Date());

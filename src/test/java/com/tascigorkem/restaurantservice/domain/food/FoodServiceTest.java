@@ -1,17 +1,7 @@
 package com.tascigorkem.restaurantservice.domain.food;
 
-import com.tascigorkem.restaurantservice.api.ApiModelFaker;
-import com.tascigorkem.restaurantservice.api.food.FoodControllerRequestDto;
-import com.tascigorkem.restaurantservice.api.food.FoodControllerResponseDto;
-import com.tascigorkem.restaurantservice.api.response.Response;
 import com.tascigorkem.restaurantservice.domain.DomainModelFaker;
-import com.tascigorkem.restaurantservice.domain.food.FoodDto;
-import com.tascigorkem.restaurantservice.domain.food.FoodPersistencePort;
-import com.tascigorkem.restaurantservice.domain.food.FoodService;
-import com.tascigorkem.restaurantservice.domain.food.FoodServiceImpl;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -35,7 +25,7 @@ class FoodServiceTest {
     @Test
     void testGetAllFoods() {
         // arrange
-        FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(DomainModelFaker.fakeFoodId());
+        FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(DomainModelFaker.fakeId());
         List<FoodDto> foodDtoList = Arrays.asList(fakeFoodDto, fakeFoodDto, fakeFoodDto);
         when(foodPersistencePort.getAllFoods()).thenReturn(Flux.fromIterable(foodDtoList));
 
@@ -59,7 +49,7 @@ class FoodServiceTest {
     @Test
     void givenFoodId_whenGetFood_andFoodExists_thenReturnFood() {
         // arrange
-        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         when(foodPersistencePort.getFoodById(fakeFoodId)).thenReturn(Mono.just(fakeFoodDto));
 
@@ -81,7 +71,7 @@ class FoodServiceTest {
     @Test
     void givenFoodControllerRequestDto_whenCreateFood_thenReturnSuccessful_andReturnFood() {
         // arrange
-        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         when(foodPersistencePort.addFood(fakeFoodDto)).thenReturn(Mono.just(fakeFoodDto));
 
@@ -103,7 +93,7 @@ class FoodServiceTest {
     @Test
     void givenFoodId_andFoodDto_whenUpdateFood_andExists_thenReturnSuccessful() {
         // arrange
-        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         when(foodPersistencePort.updateFood(fakeFoodDto)).thenReturn(Mono.just(fakeFoodDto));
 
@@ -124,7 +114,7 @@ class FoodServiceTest {
     @Test
     void givenFoodId_whenRemoveFood_andExists_thenReturnSuccessful() {
         // arrange
-        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         when(foodPersistencePort.removeFood(fakeFoodId)).thenReturn(Mono.just(fakeFoodDto));
 

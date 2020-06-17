@@ -3,6 +3,7 @@ package com.tascigorkem.restaurantservice.infrastructure.food;
 import com.tascigorkem.restaurantservice.domain.DomainModelFaker;
 import com.tascigorkem.restaurantservice.domain.food.FoodDto;
 import com.tascigorkem.restaurantservice.infrastructure.base.Status;
+import com.tascigorkem.restaurantservice.infrastructure.company.CompanyEntity;
 import com.tascigorkem.restaurantservice.util.DateUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -28,9 +29,9 @@ class FoodRepositoryIT {
     @Test
     void testGetAllFoods() {
         // arrange
-        UUID fakeFoodId1 = DomainModelFaker.fakeFoodId();
-        UUID fakeFoodId2 = DomainModelFaker.fakeFoodId();
-        UUID fakeFoodId3 = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId1 = DomainModelFaker.fakeId();
+        UUID fakeFoodId2 = DomainModelFaker.fakeId();
+        UUID fakeFoodId3 = DomainModelFaker.fakeId();
 
         FoodDto fakeFoodDto1 = DomainModelFaker.getFakeFoodDto(fakeFoodId1);
         FoodDto fakeFoodDto2 = DomainModelFaker.getFakeFoodDto(fakeFoodId2);
@@ -78,25 +79,38 @@ class FoodRepositoryIT {
         List<FoodEntity> resultFoodEntityList = result.collectList().block();
 
         // assert
+        assertNotNull(resultFoodEntityList);
+        assertEquals(resultFoodEntityList.size(), 3);
+
+        FoodEntity resultFoodEntity1 = resultFoodEntityList.stream()
+                .filter(companyEntityItem -> fakeFoodDto1.getId().equals(companyEntityItem.getId())).findFirst().get();
+
+        FoodEntity resultFoodEntity2 = resultFoodEntityList.stream()
+                .filter(companyEntityItem -> fakeFoodDto2.getId().equals(companyEntityItem.getId())).findFirst().get();
+
+        FoodEntity resultFoodEntity3 = resultFoodEntityList.stream()
+                .filter(companyEntityItem -> fakeFoodDto3.getId().equals(companyEntityItem.getId())).findFirst().get();
+
         assertAll(
-                () -> assertEquals(fakeFoodDto1.getId(), resultFoodEntityList.get(0).getId()),
-                () -> assertEquals(fakeFoodDto1.getName(), resultFoodEntityList.get(0).getName()),
-                () -> assertEquals(fakeFoodDto1.isVegetable(), resultFoodEntityList.get(0).isVegetable()),
+                () -> assertEquals(fakeFoodDto1.getId(), resultFoodEntity1.getId()),
+                () -> assertEquals(fakeFoodDto1.getName(), resultFoodEntity1.getName()),
+                () -> assertEquals(fakeFoodDto1.isVegetable(), resultFoodEntity1.isVegetable()),
 
-                () -> assertEquals(fakeFoodDto2.getId(), resultFoodEntityList.get(1).getId()),
-                () -> assertEquals(fakeFoodDto2.getName(), resultFoodEntityList.get(1).getName()),
-                () -> assertEquals(fakeFoodDto2.isVegetable(), resultFoodEntityList.get(1).isVegetable()),
+                () -> assertEquals(fakeFoodDto2.getId(), resultFoodEntity2.getId()),
+                () -> assertEquals(fakeFoodDto2.getName(), resultFoodEntity2.getName()),
+                () -> assertEquals(fakeFoodDto2.isVegetable(), resultFoodEntity2.isVegetable()),
 
-                () -> assertEquals(fakeFoodDto3.getId(), resultFoodEntityList.get(2).getId()),
-                () -> assertEquals(fakeFoodDto3.getName(), resultFoodEntityList.get(2).getName()),
-                () -> assertEquals(fakeFoodDto3.isVegetable(), resultFoodEntityList.get(2).isVegetable())
+                () -> assertEquals(fakeFoodDto3.getId(), resultFoodEntity3.getId()),
+                () -> assertEquals(fakeFoodDto3.getName(), resultFoodEntity3.getName()),
+                () -> assertEquals(fakeFoodDto3.isVegetable(), resultFoodEntity3.isVegetable())
         );
+
     }
 
     @Test
     void findById() {
         // arrange
-        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         LocalDateTime now = DateUtil.getInstance().convertToLocalDateTime(new Date());
 
@@ -132,7 +146,7 @@ class FoodRepositoryIT {
     @Test
     void givenFoodId_whenCreateFoodTwiceWithSameId_thenFails() {
         // arrange
-        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         LocalDateTime now = DateUtil.getInstance().convertToLocalDateTime(new Date());
 
@@ -174,7 +188,7 @@ class FoodRepositoryIT {
     @Test
     void testFoodFields() {
         // arrange
-        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         LocalDateTime now = DateUtil.getInstance().convertToLocalDateTime(new Date());
 

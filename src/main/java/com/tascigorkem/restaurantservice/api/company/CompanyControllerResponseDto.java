@@ -1,23 +1,23 @@
-package com.tascigorkem.restaurantservice.api.food;
+package com.tascigorkem.restaurantservice.api.company;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-class FoodControllerResponseDto {
+public class CompanyControllerResponseDto {
 
     private UUID id;
     private String name;
-    private boolean vegetable;
-    private BigDecimal price;
-    private String imageUrl;
+    private String address;
+    private String phone;
+    private String emailAddress;
+    private String websiteUrl;
 
 }

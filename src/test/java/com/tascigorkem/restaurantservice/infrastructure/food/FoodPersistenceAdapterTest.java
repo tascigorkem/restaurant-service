@@ -26,7 +26,7 @@ class FoodPersistenceAdapterTest {
     @Test
     void testGetAllFoods() {
         // arrange
-        FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(DomainModelFaker.fakeFoodId());
+        FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(DomainModelFaker.fakeId());
         List<FoodDto> foodDtoList = Arrays.asList(fakeFoodDto, fakeFoodDto, fakeFoodDto);
         List<FoodEntity> foodEntityList = foodDtoList.stream().map(subject::mapToFoodEntity).collect(Collectors.toList());
         when(foodRepository.findAll()).thenReturn(Flux.fromIterable(foodEntityList));
@@ -51,7 +51,7 @@ class FoodPersistenceAdapterTest {
     @Test
     void getFoodById() {
         // arrange
-        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         FoodEntity fakeFoodEntity = subject.mapToFoodEntity(fakeFoodDto);
         when(foodRepository.findById(fakeFoodId)).thenReturn(Mono.just(fakeFoodEntity));
@@ -74,7 +74,7 @@ class FoodPersistenceAdapterTest {
     @Test
     void givenFoodControllerRequestDto_whenCreateFood_thenReturnSuccessful_andReturnFood() {
         // arrange
-        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         FoodEntity fakeFoodEntity = subject.mapToFoodEntity(fakeFoodDto);
         when(foodRepository.save(any(FoodEntity.class))).thenReturn(Mono.just(fakeFoodEntity));
@@ -96,7 +96,7 @@ class FoodPersistenceAdapterTest {
     @Test
     void givenFoodId_andFoodDto_whenUpdateFood_andExists_thenReturnSuccessful() {
         // arrange
-        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         FoodEntity fakeFoodEntity = subject.mapToFoodEntity(fakeFoodDto);
         when(foodRepository.findById(fakeFoodId)).thenReturn(Mono.just(fakeFoodEntity));
@@ -121,7 +121,7 @@ class FoodPersistenceAdapterTest {
     @Test
     void givenFoodId_whenRemoveFood_andExists_thenReturnSuccessful() {
         // arrange
-        UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        UUID fakeFoodId = DomainModelFaker.fakeId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         FoodEntity fakeFoodEntity = subject.mapToFoodEntity(fakeFoodDto);
         when(foodRepository.findById(fakeFoodId)).thenReturn(Mono.just(fakeFoodEntity));

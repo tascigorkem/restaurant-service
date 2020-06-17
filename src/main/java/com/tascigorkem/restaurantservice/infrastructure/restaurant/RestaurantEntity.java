@@ -25,19 +25,19 @@ public class RestaurantEntity extends BaseEntity {
     @Column("phone")
     private String phone;
 
-    @Column("employeeCount")
-    private String employeeCount;
+    @Column("employee_count")
+    private int employeeCount;
 
-    @Column("point")
-    private String point;
+    @Column("company_id")
+    private UUID companyId;
 
     @Builder
-    public RestaurantEntity(LocalDateTime creationTime, LocalDateTime updateTime, Status status, LocalDateTime deletionTime, boolean deleted, UUID id, String name, String address, String phone, String employeeCount, String point) {
+    public RestaurantEntity(LocalDateTime creationTime, LocalDateTime updateTime, Status status, LocalDateTime deletionTime, boolean deleted, UUID id, String name, String address, String phone, int employeeCount, UUID companyId) {
         super(creationTime, updateTime, status, deletionTime, deleted, id);
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.employeeCount = employeeCount;
-        this.point = point;
+        this.companyId = companyId;
     }
 }
