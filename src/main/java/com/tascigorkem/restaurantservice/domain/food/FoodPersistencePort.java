@@ -1,5 +1,6 @@
 package com.tascigorkem.restaurantservice.domain.food;
 
+import com.tascigorkem.restaurantservice.infrastructure.food.FoodEntity;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -13,7 +14,7 @@ public interface FoodPersistencePort {
 
     Mono<FoodDto> addFood(FoodDto foodDto);
 
-    void updateFood(FoodDto fakeFoodDto);
+    Mono<FoodDto> updateFood(FoodDto fakeFoodDto);
 
-    void removeFood(UUID id);
+    Mono<FoodDto> removeFood(UUID id);
 }

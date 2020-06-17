@@ -84,11 +84,11 @@ class FoodServiceTest {
         UUID fakeFoodId = DomainModelFaker.fakeFoodId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
         when(foodPersistencePort.addFood(fakeFoodDto)).thenReturn(Mono.just(fakeFoodDto));
+
         // act
         Mono<FoodDto> result = subject.addFood(fakeFoodDto);
 
         //assert
-
         StepVerifier.create(result)
                 .expectNext(fakeFoodDto)
                 .verifyComplete();
@@ -105,10 +105,16 @@ class FoodServiceTest {
         // arrange
         UUID fakeFoodId = DomainModelFaker.fakeFoodId();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
+        when(foodPersistencePort.updateFood(fakeFoodDto)).thenReturn(Mono.just(fakeFoodDto));
+
         // act
-        subject.updateFood(fakeFoodDto);
+        Mono<FoodDto> result = subject.updateFood(fakeFoodDto);
 
         //assert
+        StepVerifier.create(result)
+                .expectNext(fakeFoodDto)
+                .verifyComplete();
+
         verify(foodPersistencePort).updateFood(fakeFoodDto);
     }
 
@@ -119,10 +125,17 @@ class FoodServiceTest {
     void givenFoodId_whenRemoveFood_andExists_thenReturnSuccessful() {
         // arrange
         UUID fakeFoodId = DomainModelFaker.fakeFoodId();
+        FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
+        when(foodPersistencePort.removeFood(fakeFoodId)).thenReturn(Mono.just(fakeFoodDto));
+
         // act
-        subject.removeFood(fakeFoodId);
+        Mono<FoodDto> result = subject.removeFood(fakeFoodId);
 
         //assert
+        StepVerifier.create(result)
+                .expectNext(fakeFoodDto)
+                .verifyComplete();
+
         verify(foodPersistencePort).removeFood(fakeFoodId);
     }
 }

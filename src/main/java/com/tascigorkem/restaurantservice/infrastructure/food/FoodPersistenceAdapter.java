@@ -1,11 +1,16 @@
 package com.tascigorkem.restaurantservice.infrastructure.food;
 
+import com.tascigorkem.restaurantservice.domain.exception.FoodNotFoundException;
 import com.tascigorkem.restaurantservice.domain.food.FoodDto;
 import com.tascigorkem.restaurantservice.domain.food.FoodPersistencePort;
+import com.tascigorkem.restaurantservice.infrastructure.base.Status;
+import com.tascigorkem.restaurantservice.util.DateUtil;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -19,26 +24,63 @@ public class FoodPersistenceAdapter implements FoodPersistencePort {
 
     @Override
     public Flux<FoodDto> getAllFoods() {
-        return null;
+        return foodRepository.findAll().filter(foodEntity -> !foodEntity.isDeleted())
+                .map(this::mapToFoodDto);
     }
 
     @Override
     public Mono<FoodDto> getFoodById(UUID id) {
-        return foodRepository.findById(id).map(this::mapToFoodDto);
+        return foodRepository.findById(id)
+                .switchIfEmpty(
+                        Mono.error(new FoodNotFoundException("id", id.toString())))
+                .map(this::mapToFoodDto);
     }
 
     @Override
     public Mono<FoodDto> addFood(FoodDto foodDto) {
-        return Mono.empty();
+        LocalDateTime now = DateUtil.getInstance().convertToLocalDateTime(new Date());
+        return foodRepository.save(FoodEntity.builder()
+                .id(UUID.randomUUID())
+                .creationTime(now)
+                .updateTime(now)
+                .status(Status.CREATED)
+                .deleted(false)
+                .name(foodDto.getName())
+                .vegetable(foodDto.isVegetable())
+                .build())
+                .map(this::mapToFoodDto);
     }
 
     @Override
-    public void updateFood(FoodDto fakeFoodDto) {
+    public Mono<FoodDto> updateFood(FoodDto foodDto) {
+        LocalDateTime now = DateUtil.getInstance().convertToLocalDateTime(new Date());
 
+        return foodRepository.findById(foodDto.getId()).flatMap(foodEntity -> {
+            foodEntity.setUpdateTime(now);
+            foodEntity.setStatus(Status.UPDATED);
+            foodEntity.setName(foodDto.getName());
+            foodEntity.setVegetable(foodDto.isVegetable());
+            return foodRepository.save(foodEntity);
+        })
+                .switchIfEmpty(
+                        Mono.error(new FoodNotFoundException("id", foodDto.getId().toString())))
+                .map(this::mapToFoodDto);
     }
 
     @Override
-    public void removeFood(UUID id) {
+    public Mono<FoodDto> removeFood(UUID id) {
+        LocalDateTime now = DateUtil.getInstance().convertToLocalDateTime(new Date());
+
+        return foodRepository.findById(id).flatMap(foodEntity -> {
+            foodEntity.setUpdateTime(now);
+            foodEntity.setStatus(Status.UPDATED);
+            foodEntity.setDeleted(true);
+            foodEntity.setDeletionTime(now);
+            return foodRepository.save(foodEntity);
+        })
+                .switchIfEmpty(
+                        Mono.error(new FoodNotFoundException("id", id.toString())))
+                .map(this::mapToFoodDto);
 
     }
 

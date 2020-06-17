@@ -19,8 +19,8 @@ public interface FoodController {
     @PostMapping("/foods")
     Mono<Response> addFood(@RequestBody FoodControllerRequestDto foodControllerRequestDto);
 
-    @PutMapping("/foods")
-    Mono<Response> updateFood(@RequestBody FoodControllerRequestDto foodControllerRequestDto);
+    @PutMapping("/foods/{id}")
+    Mono<Response> updateFood(@PathVariable("id") UUID id, @RequestBody FoodControllerRequestDto foodControllerRequestDto);
 
     @DeleteMapping("/foods/{id}")
     Mono<Response> removeFood(@PathVariable("id") UUID id);

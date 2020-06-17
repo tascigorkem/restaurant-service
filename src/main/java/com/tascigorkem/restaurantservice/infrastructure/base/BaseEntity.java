@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public abstract class BaseEntity implements Persistable<UUID> {
 

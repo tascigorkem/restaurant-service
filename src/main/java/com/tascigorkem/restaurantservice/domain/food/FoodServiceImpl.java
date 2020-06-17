@@ -1,5 +1,6 @@
 package com.tascigorkem.restaurantservice.domain.food;
 
+import com.tascigorkem.restaurantservice.infrastructure.food.FoodEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -31,13 +32,13 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public void updateFood(FoodDto foodDto) {
-        foodPersistencePort.updateFood(foodDto);
+    public Mono<FoodDto> updateFood(FoodDto foodDto) {
+        return foodPersistencePort.updateFood(foodDto);
     }
 
     @Override
-    public void removeFood(UUID id) {
-        foodPersistencePort.removeFood(id);
+    public Mono<FoodDto> removeFood(UUID id) {
+        return foodPersistencePort.removeFood(id);
     }
 
 }

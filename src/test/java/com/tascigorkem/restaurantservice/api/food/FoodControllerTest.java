@@ -39,6 +39,9 @@ class FoodControllerTest {
 
     private FoodController subject = new FoodControllerImpl(foodService);
 
+    /**
+     * Unit test for FoodController:getAllFoods
+     */
     @Test
     void testGetAllFoods() {
         // test endpoint FoodController:getFoods
@@ -78,6 +81,9 @@ class FoodControllerTest {
         verify(foodService).getAllFoods();
     }
 
+    /**
+     * Unit test for FoodController:getFoodById
+     */
     @Test
     void givenFoodId_whenGetFood_andFoodExists_thenReturnFood() {
         // test endpoint FoodController:getFoodById
@@ -108,30 +114,9 @@ class FoodControllerTest {
         verify(foodService).getFoodById(fakeFoodId);
     }
 
-    @Test
-    void givenFoodId_whenGetFood_andFoodNotExists_thenThrowsNotFound() {
-        // test endpoint FoodController:getFoodById
-        // arrange
-        UUID fakeFoodId = UUID.randomUUID();
-        when(foodService.getFoodById(fakeFoodId)).thenReturn(Mono.empty());
-        // act
-        client.get().uri("/foods/" + fakeFoodId)
-                .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-
-                // assert
-                .expectStatus().isOk()
-                .expectBody(Response.class)
-                .value(response ->
-                        assertAll(
-                                () -> assertEquals(HttpStatus.NOT_FOUND, response.getStatus()),
-                                () -> assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode()),
-                                () -> assertEquals(new FoodNotFoundException("id", fakeFoodId.toString()).getMessage(), response.getPayload())
-                        )
-                );
-        verify(foodService).getFoodById(fakeFoodId);
-    }
-
+    /**
+     * Unit test for FoodController:addFood
+     */
     @Test
     void givenFoodControllerRequestDto_whenCreateFood_thenReturnSuccessful_andReturnFood() {
         // test endpoint FoodController:addFood
@@ -164,14 +149,20 @@ class FoodControllerTest {
         verify(foodService).addFood(fakeFoodDto);
     }
 
+    /**
+     * Unit test for FoodController:updateFood
+     */
     @Test
     void givenFoodFoodControllerRequestDto_andFoodControllerRequestDto_whenUpdateFood_andExists_thenReturnSuccessful() {
         // test endpoint FoodController:updateFood
         // arrange
+        UUID fakeFoodId = UUID.randomUUID();
         FoodControllerRequestDto fakeFoodControllerRequestDto = ApiModelFaker.getFoodControllerRequestDto();
         FoodDto fakeFoodDto = subject.mapToFoodDto().apply(fakeFoodControllerRequestDto);
+        fakeFoodDto.setId(fakeFoodId);
+        when(foodService.updateFood(fakeFoodDto)).thenReturn(Mono.just(fakeFoodDto));
         // act
-        client.put().uri("/foods")
+        client.put().uri("/foods/" + fakeFoodId)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(fakeFoodControllerRequestDto), FoodControllerRequestDto.class)
@@ -181,9 +172,14 @@ class FoodControllerTest {
                 .expectStatus().isOk()
                 .expectBody(Response.class)
                 .value(response -> {
+
+                    FoodControllerResponseDto foodResponseDto = objectMapper
+                            .convertValue(response.getPayload(), FoodControllerResponseDto.class);
                             assertAll(
                                     () -> assertEquals(HttpStatus.OK, response.getStatus()),
-                                    () -> assertEquals(HttpStatus.OK.value(), response.getStatusCode())
+                                    () -> assertEquals(HttpStatus.OK.value(), response.getStatusCode()),
+                                    () -> assertEquals(fakeFoodDto.getName(), foodResponseDto.getName()),
+                                    () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable())
                             );
                         }
 
@@ -191,11 +187,16 @@ class FoodControllerTest {
         verify(foodService).updateFood(fakeFoodDto);
     }
 
+    /**
+     * Unit test for FoodController:removeFood
+     */
     @Test
     void givenFoodId_whenRemoveFood_andExists_thenReturnSuccessful() {
         // test endpoint FoodController:removeFood
         // arrange
         UUID fakeFoodId = UUID.randomUUID();
+        FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
+        when(foodService.removeFood(fakeFoodId)).thenReturn(Mono.just(fakeFoodDto));
         // act
         client.delete().uri("/foods/" + fakeFoodId)
                 .accept(MediaType.APPLICATION_JSON)
@@ -205,9 +206,15 @@ class FoodControllerTest {
                 .expectStatus().isOk()
                 .expectBody(Response.class)
                 .value(response -> {
+
+                    FoodControllerResponseDto foodResponseDto = objectMapper
+                            .convertValue(response.getPayload(), FoodControllerResponseDto.class);
+
                             assertAll(
                                     () -> assertEquals(HttpStatus.OK, response.getStatus()),
-                                    () -> assertEquals(HttpStatus.OK.value(), response.getStatusCode())
+                                    () -> assertEquals(HttpStatus.OK.value(), response.getStatusCode()),
+                                    () -> assertEquals(fakeFoodDto.getName(), foodResponseDto.getName()),
+                                    () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable())
                             );
                         }
 

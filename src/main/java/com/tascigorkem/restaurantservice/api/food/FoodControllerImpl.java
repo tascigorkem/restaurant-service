@@ -35,11 +35,7 @@ public class FoodControllerImpl implements FoodController {
         return foodService.getFoodById(id)
                 .map(mapToFoodControllerResponseDto())
                 .map(Response.ok()::setPayload)
-                .cast(Response.class)
-                .switchIfEmpty(Mono.just(
-                        Response.notFound().setPayload(
-                                new FoodNotFoundException("id", id.toString()).getMessage())
-                ));
+                .cast(Response.class);
     }
 
     @Override
@@ -51,15 +47,21 @@ public class FoodControllerImpl implements FoodController {
     }
 
     @Override
-    public Mono<Response> updateFood(FoodControllerRequestDto foodControllerRequestDto) {
-        foodService.updateFood(mapToFoodDto().apply(foodControllerRequestDto));
-        return Mono.just(Response.ok());
+    public Mono<Response> updateFood(UUID id, FoodControllerRequestDto foodControllerRequestDto) {
+        FoodDto foodDto = mapToFoodDto().apply(foodControllerRequestDto);
+        foodDto.setId(id);
+        return foodService.updateFood(foodDto)
+                .map(mapToFoodControllerResponseDto())
+                .map(Response.ok()::setPayload)
+                .cast(Response.class);
     }
 
     @Override
     public Mono<Response> removeFood(UUID id) {
-        foodService.removeFood(id);
-        return Mono.just(Response.ok());
+        return foodService.removeFood(id)
+                .map(mapToFoodControllerResponseDto())
+                .map(Response.ok()::setPayload)
+                .cast(Response.class);
     }
 
     @Override

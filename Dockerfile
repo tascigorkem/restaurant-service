@@ -17,6 +17,6 @@ FROM openjdk:11-jdk-slim as runtime
 MAINTAINER Gorkem Tasci
 
 #Copy executable jar file from the builder image
-COPY --from=builder /build/target/*.jar app.jar
+COPY --from=builder /build/target/restaurant-service-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]
