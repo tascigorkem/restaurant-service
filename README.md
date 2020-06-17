@@ -1,7 +1,5 @@
 ## Restaurant Service for Food Order System
 
-RESTful Service with Spring Boot
-
 <p align="center">
     <a alt="Java">
         <img src="https://img.shields.io/badge/Java-v1.11-orange.svg" />
@@ -20,7 +18,7 @@ RESTful Service with Spring Boot
     </a>
 </p>
 
-This application developed with Spring WebFlux and R2DBC in Spring Boot.
+RESTful Restaurant Service developed with Spring WebFlux and R2DBC (Postgesql) in Spring Boot.
 
 ### Hexagonal architecture
 
@@ -28,44 +26,66 @@ Used hexagonal architecture with TDD for this project.
 
 Example Flow:
 
-Client -> CompanyController (I) -> CompanyControllerImpl -> 
+`Client <-> ` 
 
-CompanyService (I) -> CompanyServiceImpl -> 
+`CompanyController (I) <-> CompanyControllerImpl <->` 
 
-CompanyPersistencePort (I) -> CompanyPersistenceAdapter 
+`CompanyService (I) <-> CompanyServiceImpl <-> `
 
--> CompanyRepository (I) -> ReactiveCrudRepository (I) -> DB
+`CompanyPersistencePort (I) <-> CompanyPersistenceAdapter <-> `
 
-<img src="./docs/project-structure.png" alt="project-structure" width="400">
+`CompanyRepository (I) <-> ReactiveCrudRepository (I) <-> DB <-> `
+
+`DB`
+
+<img src="./docs/project-structure.png" alt="" width="400">
 
 ## Tests
 
-Run Integration Tests: `mvn integration-test` (**/*IT.class)
+Run `mvn integration-test` for Integration Tests (**/*IT.class)
 
-Run Unit Tests: `mvn test` (**/*Test.class)
+Run `mvn test` for Unit Tests (**/*Test.class)
 
 #### Test Pattern
 
-Used 
+Used patterns:
 
-* 3A (Arrange, Act, Assert) pattern 
+* TDD (Test Driven Development)
 
-* Given, When, Then pattern
+* 3A (Arrange, Act, Assert) 
+
+* Given, When, Then and BDD (Behavior-Driven Development)
 
 for unit tests and integration tests.
 
-<img src="./docs/unit-test.png" alt="unit-test" width="500">
+<img src="./docs/unit-test.png" alt="" width="500">
 
 #### Test Coverage
 
 98% classes, 96% lines covered in project.
 
-<img src="./docs/test-coverege.png" alt="test-coverege" width="500">
+<img src="./docs/test-coverege.png" alt="" width="500">
 
-http://localhost:8080/api-docs
+## Docs
 
-http://localhost:8080/swagger-ui.html
+Docs in ./docs.
 
-https://cb-restaurant-service-staging.herokuapp.com/
+#### Swagger & Api-Docs
 
-https://cb-restaurant-service-prod.herokuapp.com/
+Used Swagger and Api-Docs for RestAPI endpoints.
+
+https://cb-restaurant-service.herokuapp.com/swagger-ui.html
+
+https://cb-restaurant-service.herokuapp.com/api-docs
+
+<img src="./docs/add-food-request.png" alt="" width="500">
+<img src="./docs/get-all-foods-request.png" alt="" width="500">
+<img src="./docs/javadoc.png" alt="javadoc" width="500">
+
+
+#### javadoc
+
+Run `mvn javadoc:javadoc` for create javadocs.
+
+<img src="./docs/javadoc.png" alt="javadoc" width="500">
+
