@@ -36,7 +36,7 @@ create table if not exists restaurant
     status_type    varchar(30),
     deleted        boolean not null,
     deletion_time  timestamp,
-    name          varchar(255),
+    name           varchar(255),
     address        varchar(255),
     phone          varchar(30),
     employee_count integer,
@@ -95,18 +95,20 @@ alter table food
 -- Menu - Food Relation Table
 create table menu_food
 (
-    id            uuid    not null
+    id             uuid    not null
         constraint menu_food_pk
             primary key,
-    creation_time timestamp,
-    update_time   timestamp,
-    status_type   varchar(30),
-    deleted       boolean not null,
-    deletion_time timestamp,
-    menu_id       uuid
+    creation_time  timestamp,
+    update_time    timestamp,
+    status_type    varchar(30),
+    deleted        boolean not null,
+    deletion_time  timestamp,
+    extended       boolean not null,
+    extended_price numeric,
+    menu_id        uuid
         constraint menu_food_menu_id_fk
             references menu,
-    food_id       uuid
+    food_id        uuid
         constraint menu_food_food_id_fk
             references food
 );

@@ -8,13 +8,20 @@ import lombok.Setter;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @Setter
-@Table("menu")
+@Table("menu_food")
 public class MenuFoodEntity extends BaseEntity {
+
+    @Column("extended")
+    private boolean extended;
+
+    @Column("extended_price")
+    private UUID extendedPrice;
 
     @Column("menu_id")
     private UUID menuId;
@@ -23,8 +30,10 @@ public class MenuFoodEntity extends BaseEntity {
     private UUID foodId;
 
     @Builder
-    public MenuFoodEntity(LocalDateTime creationTime, LocalDateTime updateTime, Status status, LocalDateTime deletionTime, boolean deleted, UUID id, UUID menuId, UUID foodId) {
+    public MenuFoodEntity(LocalDateTime creationTime, LocalDateTime updateTime, Status status, LocalDateTime deletionTime, boolean deleted, UUID id, boolean extended, UUID extendedPrice, UUID menuId, UUID foodId) {
         super(creationTime, updateTime, status, deletionTime, deleted, id);
+        this.extended = extended;
+        this.extendedPrice = extendedPrice;
         this.menuId = menuId;
         this.foodId = foodId;
     }
