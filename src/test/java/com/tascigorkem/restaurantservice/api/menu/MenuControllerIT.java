@@ -1,10 +1,10 @@
-package com.tascigorkem.restaurantservice.api.company;
+package com.tascigorkem.restaurantservice.api.menu;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tascigorkem.restaurantservice.api.response.Response;
 import com.tascigorkem.restaurantservice.domain.DomainModelFaker;
-import com.tascigorkem.restaurantservice.domain.company.CompanyDto;
-import com.tascigorkem.restaurantservice.domain.company.CompanyPersistencePort;
+import com.tascigorkem.restaurantservice.domain.menu.MenuDto;
+import com.tascigorkem.restaurantservice.domain.menu.MenuPersistencePort;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class CompanyControllerIT {
+class MenuControllerIT {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -30,19 +30,19 @@ class CompanyControllerIT {
     private ApplicationContext context;
 
     @MockBean
-    private CompanyPersistencePort companyPersistencePort;
+    private MenuPersistencePort menuPersistencePort;
 
     @Test
-    void getCompany() {
+    void getMenu() {
         // arrange
         final WebTestClient client = WebTestClient.bindToApplicationContext(context).build();
 
-        UUID fakeCompanyId = UUID.randomUUID();
-        CompanyDto fakeCompanyDto = DomainModelFaker.getFakeCompanyDto(fakeCompanyId);
-        when(companyPersistencePort.getCompanyById(fakeCompanyId)).thenReturn(Mono.just(fakeCompanyDto));
+        UUID fakeMenuId = UUID.randomUUID();
+        MenuDto fakeMenuDto = DomainModelFaker.getFakeMenuDto(fakeMenuId);
+        when(menuPersistencePort.getMenuById(fakeMenuId)).thenReturn(Mono.just(fakeMenuDto));
 
         // act
-        client.get().uri("/companies/" + fakeCompanyId)
+        client.get().uri("/menus/" + fakeMenuId)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
 
@@ -50,17 +50,15 @@ class CompanyControllerIT {
                 .expectStatus().isOk()
                 .expectBody(Response.class)
                 .value(response -> {
-                    CompanyControllerResponseDto companyResponseDto = objectMapper
-                            .convertValue(response.getPayload(), CompanyControllerResponseDto.class);
+                    MenuControllerResponseDto menuResponseDto = objectMapper
+                            .convertValue(response.getPayload(), MenuControllerResponseDto.class);
 
                     assertAll(
                             () -> assertEquals(HttpStatus.OK, response.getStatus()),
-                            () -> assertEquals(fakeCompanyId, companyResponseDto.getId()),
-                            () -> assertEquals(fakeCompanyDto.getName(), companyResponseDto.getName()),
-                            () -> assertEquals(fakeCompanyDto.getAddress(), companyResponseDto.getAddress()),
-                            () -> assertEquals(fakeCompanyDto.getPhone(), companyResponseDto.getPhone()),
-                            () -> assertEquals(fakeCompanyDto.getEmailAddress(), companyResponseDto.getEmailAddress()),
-                            () -> assertEquals(fakeCompanyDto.getWebsiteUrl(), companyResponseDto.getWebsiteUrl())
+                            () -> assertEquals(fakeMenuId, menuResponseDto.getId()),
+                            () -> assertEquals(fakeMenuDto.getName(), menuResponseDto.getName()),
+                            () -> assertEquals(fakeMenuDto.getMenuType(), menuResponseDto.getMenuType()),
+                            () -> assertEquals(fakeMenuDto.getRestaurantId(), menuResponseDto.getRestaurantId())
                     );
                 });
 

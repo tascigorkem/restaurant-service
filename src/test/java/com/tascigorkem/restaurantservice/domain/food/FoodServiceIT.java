@@ -64,7 +64,6 @@ class FoodServiceIT {
 //        assertAll(
 //                () -> assertEquals(fakeFoodDto.getId(), foodDto.getId()),
 //                () -> assertEquals(fakeFoodDto.getName(), foodDto.getName()),
-//                () -> assertEquals(fakeFoodDto.isVegetable(), foodDto.isVegetable())
 //        );
     }
 }

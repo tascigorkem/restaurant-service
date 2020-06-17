@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import com.tascigorkem.restaurantservice.domain.company.CompanyDto;
 import com.tascigorkem.restaurantservice.domain.food.FoodDto;
 import com.tascigorkem.restaurantservice.domain.menu.MenuDto;
+import com.tascigorkem.restaurantservice.domain.menufood.MenuFoodDto;
 import com.tascigorkem.restaurantservice.domain.restaurant.RestaurantDto;
 import com.tascigorkem.restaurantservice.util.DateUtil;
 
@@ -34,7 +35,7 @@ public class DomainModelFaker {
 
         return RestaurantDto.builder()
                 .id(id)
-                .name(faker.company().name())
+                .name(faker.lorem().word())
                 .address(faker.address().fullAddress())
                 .phone(faker.phoneNumber().phoneNumber())
                 .employeeCount(faker.number().numberBetween(1, 1000))
@@ -47,7 +48,7 @@ public class DomainModelFaker {
 
         return MenuDto.builder()
                 .id(id)
-                .name(faker.company().name())
+                .name(faker.lorem().word())
                 .menuType(faker.lorem().word())
                 .restaurantId(UUID.randomUUID())
                 .build();
@@ -60,12 +61,29 @@ public class DomainModelFaker {
                 .id(id)
                 .name(faker.food().dish())
                 .vegetable(faker.bool().bool())
-                .price(BigDecimal.valueOf(faker.number().randomDouble(2, 1, 10)))
+                .price(fakePrice())
                 .imageUrl(faker.internet().url())
+                .build();
+    }
+
+    public static BigDecimal fakePrice() {
+        return BigDecimal.valueOf(faker.number().randomDouble(2, 1, 50));
+    }
+
+    public static MenuFoodDto getFakeMenuFoodDto(UUID id) {
+        return MenuFoodDto.builder()
+                .id(id)
+                .menuId(UUID.randomUUID())
+                .foodId(UUID.randomUUID())
+                .foodName(faker.food().dish())
+                .originalPrice(fakePrice())
+                .extended(faker.bool().bool())
+                .extendedPrice(fakePrice())
                 .build();
     }
 
     public static UUID fakeId() {
         return UUID.randomUUID();
     }
+
 }

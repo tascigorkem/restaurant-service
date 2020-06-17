@@ -43,7 +43,6 @@ class FoodControllerTest {
      */
     @Test
     void testGetAllFoods() {
-        // test endpoint FoodController:getFoods
         // arrange
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(DomainModelFaker.fakeId());
         List<FoodDto> foodDtoList = Arrays.asList(fakeFoodDto, fakeFoodDto, fakeFoodDto);
@@ -87,7 +86,6 @@ class FoodControllerTest {
      */
     @Test
     void givenFoodId_whenGetFood_andFoodExists_thenReturnFood() {
-        // test endpoint FoodController:getFoodById
         // arrange
         UUID fakeFoodId = UUID.randomUUID();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);
@@ -122,7 +120,6 @@ class FoodControllerTest {
      */
     @Test
     void givenFoodControllerRequestDto_whenCreateFood_thenReturnSuccessful_andReturnFood() {
-        // test endpoint FoodController:addFood
         // arrange
         FoodControllerRequestDto fakeFoodControllerRequestDto = ApiModelFaker.getFoodControllerRequestDto();
         FoodDto fakeFoodDto = subject.mapToFoodDto().apply(fakeFoodControllerRequestDto);
@@ -159,7 +156,6 @@ class FoodControllerTest {
      */
     @Test
     void givenFoodFoodControllerRequestDto_andFoodControllerRequestDto_whenUpdateFood_andExists_thenReturnSuccessful() {
-        // test endpoint FoodController:updateFood
         // arrange
         UUID fakeFoodId = UUID.randomUUID();
         FoodControllerRequestDto fakeFoodControllerRequestDto = ApiModelFaker.getFoodControllerRequestDto();
@@ -199,7 +195,6 @@ class FoodControllerTest {
      */
     @Test
     void givenFoodId_whenRemoveFood_andExists_thenReturnSuccessful() {
-        // test endpoint FoodController:removeFood
         // arrange
         UUID fakeFoodId = UUID.randomUUID();
         FoodDto fakeFoodDto = DomainModelFaker.getFakeFoodDto(fakeFoodId);

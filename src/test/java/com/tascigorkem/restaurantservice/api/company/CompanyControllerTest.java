@@ -43,7 +43,6 @@ class CompanyControllerTest {
      */
     @Test
     void testGetAllCompanies() {
-        // test endpoint CompanyController:getCompanies
         // arrange
         CompanyDto fakeCompanyDto = DomainModelFaker.getFakeCompanyDto(DomainModelFaker.fakeId());
         List<CompanyDto> companyDtoList = Arrays.asList(fakeCompanyDto, fakeCompanyDto, fakeCompanyDto);
@@ -88,7 +87,6 @@ class CompanyControllerTest {
      */
     @Test
     void givenCompanyId_whenGetCompany_andCompanyExists_thenReturnCompany() {
-        // test endpoint CompanyController:getCompanyById
         // arrange
         UUID fakeCompanyId = UUID.randomUUID();
         CompanyDto fakeCompanyDto = DomainModelFaker.getFakeCompanyDto(fakeCompanyId);
@@ -124,7 +122,6 @@ class CompanyControllerTest {
      */
     @Test
     void givenCompanyControllerRequestDto_whenCreateCompany_thenReturnSuccessful_andReturnCompany() {
-        // test endpoint CompanyController:addCompany
         // arrange
         CompanyControllerRequestDto fakeCompanyControllerRequestDto = ApiModelFaker.getCompanyControllerRequestDto();
         CompanyDto fakeCompanyDto = subject.mapToCompanyDto().apply(fakeCompanyControllerRequestDto);
@@ -162,7 +159,6 @@ class CompanyControllerTest {
      */
     @Test
     void givenCompanyCompanyControllerRequestDto_andCompanyControllerRequestDto_whenUpdateCompany_andExists_thenReturnSuccessful() {
-        // test endpoint CompanyController:updateCompany
         // arrange
         UUID fakeCompanyId = UUID.randomUUID();
         CompanyControllerRequestDto fakeCompanyControllerRequestDto = ApiModelFaker.getCompanyControllerRequestDto();
@@ -203,7 +199,6 @@ class CompanyControllerTest {
      */
     @Test
     void givenCompanyId_whenRemoveCompany_andExists_thenReturnSuccessful() {
-        // test endpoint CompanyController:removeCompany
         // arrange
         UUID fakeCompanyId = UUID.randomUUID();
         CompanyDto fakeCompanyDto = DomainModelFaker.getFakeCompanyDto(fakeCompanyId);

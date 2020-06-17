@@ -1,12 +1,15 @@
-package com.tascigorkem.restaurantservice.api.company;
+package com.tascigorkem.restaurantservice.api.restaurant;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tascigorkem.restaurantservice.api.response.Response;
 import com.tascigorkem.restaurantservice.domain.DomainModelFaker;
 import com.tascigorkem.restaurantservice.domain.company.CompanyDto;
+import com.tascigorkem.restaurantservice.domain.restaurant.RestaurantDto;
 import com.tascigorkem.restaurantservice.infrastructure.base.Status;
 import com.tascigorkem.restaurantservice.infrastructure.company.CompanyEntity;
 import com.tascigorkem.restaurantservice.infrastructure.company.CompanyRepository;
+import com.tascigorkem.restaurantservice.infrastructure.restaurant.RestaurantEntity;
+import com.tascigorkem.restaurantservice.infrastructure.restaurant.RestaurantRepository;
 import com.tascigorkem.restaurantservice.util.DateUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class CompanyControllerEnd2EndIT {
+class RestaurantControllerEnd2EndIT {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -34,18 +37,26 @@ class CompanyControllerEnd2EndIT {
     @Autowired
     private CompanyRepository companyRepository;
 
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+
     @Test
-    void getCompany() {
+    void getRestaurant() {
         // arrange
         final WebTestClient client = WebTestClient.bindToApplicationContext(context).build();
 
-        UUID fakeCompanyId = UUID.randomUUID();
+        UUID fakeCompanyId = DomainModelFaker.fakeId();
         CompanyDto fakeCompanyDto = DomainModelFaker.getFakeCompanyDto(fakeCompanyId);
+
+        UUID fakeRestaurantId = DomainModelFaker.fakeId();
+        RestaurantDto fakeRestaurantDto = DomainModelFaker.getFakeRestaurantDto(fakeRestaurantId);
+        fakeRestaurantDto.setCompanyId(fakeCompanyId);
 
         LocalDateTime now = DateUtil.getInstance().convertToLocalDateTime(new Date());
 
         // prepare db, delete all entities and insert one entity
-        companyRepository.deleteAll()
+        restaurantRepository.deleteAll()
+                .then(companyRepository.deleteAll())
                 .then(companyRepository.save(CompanyEntity.builder()
                         .id(fakeCompanyId)
                         .creationTime(now)
@@ -58,10 +69,22 @@ class CompanyControllerEnd2EndIT {
                         .emailAddress(fakeCompanyDto.getEmailAddress())
                         .websiteUrl(fakeCompanyDto.getWebsiteUrl())
                         .build()))
+                .then(restaurantRepository.save(RestaurantEntity.builder()
+                        .id(fakeRestaurantId)
+                        .creationTime(now)
+                        .updateTime(now)
+                        .status(Status.CREATED)
+                        .deleted(false)
+                        .name(fakeRestaurantDto.getName())
+                        .address(fakeRestaurantDto.getAddress())
+                        .phone(fakeRestaurantDto.getPhone())
+                        .employeeCount(fakeRestaurantDto.getEmployeeCount())
+                        .companyId(fakeCompanyId)
+                        .build()))
                 .block();
 
         // act
-        client.get().uri("/companies/" + fakeCompanyId)
+        client.get().uri("/restaurants/" + fakeRestaurantId)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
 
@@ -69,18 +92,18 @@ class CompanyControllerEnd2EndIT {
                 .expectStatus().isOk()
                 .expectBody(Response.class)
                 .value(response -> {
-                    CompanyControllerResponseDto companyResponseDto = objectMapper
-                            .convertValue(response.getPayload(), CompanyControllerResponseDto.class);
+                    RestaurantControllerResponseDto restaurantResponseDto = objectMapper
+                            .convertValue(response.getPayload(), RestaurantControllerResponseDto.class);
 
                     assertAll(
                             () -> assertEquals(HttpStatus.OK.value(), response.getStatusCode()),
                             () -> assertEquals(HttpStatus.OK, response.getStatus()),
-                            () -> assertEquals(fakeCompanyId, companyResponseDto.getId()),
-                            () -> assertEquals(fakeCompanyDto.getName(), companyResponseDto.getName()),
-                            () -> assertEquals(fakeCompanyDto.getAddress(), companyResponseDto.getAddress()),
-                            () -> assertEquals(fakeCompanyDto.getPhone(), companyResponseDto.getPhone()),
-                            () -> assertEquals(fakeCompanyDto.getEmailAddress(), companyResponseDto.getEmailAddress()),
-                            () -> assertEquals(fakeCompanyDto.getWebsiteUrl(), companyResponseDto.getWebsiteUrl())
+                            () -> assertEquals(fakeRestaurantId, restaurantResponseDto.getId()),
+                            () -> assertEquals(fakeRestaurantDto.getName(), restaurantResponseDto.getName()),
+                            () -> assertEquals(fakeRestaurantDto.getAddress(), restaurantResponseDto.getAddress()),
+                            () -> assertEquals(fakeRestaurantDto.getPhone(), restaurantResponseDto.getPhone()),
+                            () -> assertEquals(fakeRestaurantDto.getEmployeeCount(), restaurantResponseDto.getEmployeeCount()),
+                            () -> assertEquals(fakeRestaurantDto.getCompanyId(), restaurantResponseDto.getCompanyId())
                     );
                 });
     }

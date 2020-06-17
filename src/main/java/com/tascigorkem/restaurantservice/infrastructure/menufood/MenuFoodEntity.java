@@ -21,7 +21,7 @@ public class MenuFoodEntity extends BaseEntity {
     private boolean extended;
 
     @Column("extended_price")
-    private UUID extendedPrice;
+    private BigDecimal extendedPrice;
 
     @Column("menu_id")
     private UUID menuId;
@@ -30,7 +30,8 @@ public class MenuFoodEntity extends BaseEntity {
     private UUID foodId;
 
     @Builder
-    public MenuFoodEntity(LocalDateTime creationTime, LocalDateTime updateTime, Status status, LocalDateTime deletionTime, boolean deleted, UUID id, boolean extended, UUID extendedPrice, UUID menuId, UUID foodId) {
+
+    public MenuFoodEntity(LocalDateTime creationTime, LocalDateTime updateTime, Status status, LocalDateTime deletionTime, boolean deleted, UUID id, boolean extended, BigDecimal extendedPrice, UUID menuId, UUID foodId) {
         super(creationTime, updateTime, status, deletionTime, deleted, id);
         this.extended = extended;
         this.extendedPrice = extendedPrice;

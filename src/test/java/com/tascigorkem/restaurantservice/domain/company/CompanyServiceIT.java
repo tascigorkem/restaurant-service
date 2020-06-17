@@ -67,7 +67,6 @@ class CompanyServiceIT {
 //        assertAll(
 //                () -> assertEquals(fakeCompanyDto.getId(), companyDto.getId()),
 //                () -> assertEquals(fakeCompanyDto.getName(), companyDto.getName())
-//        ...
 //        );
     }
 }

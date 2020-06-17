@@ -107,10 +107,12 @@ create table menu_food
     extended_price numeric,
     menu_id        uuid
         constraint menu_food_menu_id_fk
-            references menu,
+            references menu
+            on update cascade on delete cascade,
     food_id        uuid
         constraint menu_food_food_id_fk
             references food
+            on update cascade on delete cascade
 );
 
 alter table menu_food

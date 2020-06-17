@@ -67,7 +67,7 @@ class FoodRepositoryIT {
                 .vegetable(fakeFoodDto3.isVegetable())
                 .build();
 
-        // prepare db, delete all entities and insert one entity
+        // prepare db, delete all entities and insert three foods
         foodRepository.deleteAll()
                 .then(foodRepository.save(foodEntity1))
                 .then(foodRepository.save(foodEntity2))
