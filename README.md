@@ -40,6 +40,34 @@ Example Flow:
 
 <img src="./docs/project-structure.png" alt="" width="400">
 
+## CI & Deployment
+
+`Github` repo connected `Travis CI` and triggered after every push to the `master` branch, then build application and running tests and started deploy to `Heroku`.
+
+Connected `Logentries` distributed tracing tool to Heroku Application for monitoring.
+
+#### Travis CI
+
+`./docs/travis-ci.pdf`
+
+<img src="./docs/travis-ci.png" alt="" width="800">
+
+#### Heroku
+
+`./docs/heroku-dashboard.pdf`
+
+<img src="./docs/heroku.png" alt="" width="800">
+
+#### Logentries
+
+`./docs/logentries-1.pdf`
+
+`./docs/logentries-2.pdf`
+
+`./docs/logentries-3.pdf`
+
+<img src="./docs/logentries-3.png" alt="" width="800">
+
 ## Tests
 
 Run `mvn integration-test` for Integration Tests (**/*IT.class)
@@ -68,7 +96,15 @@ for unit tests and integration tests.
 
 ## Docs
 
-Docs located ./docs folder in project main folder.
+Docs located `./docs` folder in project main folder.
+
+#### Javadoc
+
+Used javadoc standarts for method comments.
+
+Run `mvn javadoc:javadoc` for create javadocs.
+
+<img src="./docs/javadoc.png" alt="javadoc" width="800">
 
 #### Swagger & Api-Docs
 
@@ -79,12 +115,8 @@ https://cb-restaurant-service.herokuapp.com/swagger-ui.html
 https://cb-restaurant-service.herokuapp.com/api-docs
 
 <img src="./docs/add-food-request.png" alt="" width="800">
+
 <img src="./docs/get-all-foods-request.png" alt="" width="800">
 
-
-#### javadoc
-
-Run `mvn javadoc:javadoc` for create javadocs.
-
-<img src="./docs/javadoc.png" alt="javadoc" width="800">
+## Problems
 
