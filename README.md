@@ -20,8 +20,27 @@ RESTful Service with Spring Boot
     </a>
 </p>
 
+This application developed with Spring WebFlux and R2DBC in Spring Boot.
+
+### Hexagonal architecture
+
+Used hexagonal architecture for this project.
+
+Example Flow:
+
+Client -> CompanyController (I) -> CompanyControllerImpl -> 
+
+CompanyService (I) -> CompanyServiceImpl -> 
+
+CompanyPersistencePort (I) -> CompanyPersistenceAdapter 
+
+-> CompanyRepository (I) -> ReactiveCrudRepository (I) -> DB
+
+<img src="./docs/project-structure.png" alt="project-structure" width="400">
+
+
 <div align="center">
-<h4>Mobile</h4>
+<h4>Test Coverage</h4>
   <img src="./docs/test-coverege.png" alt="test-coverege" width="400">
 </div>
 
