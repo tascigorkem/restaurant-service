@@ -110,6 +110,8 @@ class FoodRepositoryIT {
                         .deleted(false)
                         .name(fakeFoodDto.getName())
                         .vegetable(fakeFoodDto.isVegetable())
+                        .price(fakeFoodDto.getPrice())
+                        .imageUrl(fakeFoodDto.getImageUrl())
                         .build()))
                 .block();
 
@@ -121,7 +123,9 @@ class FoodRepositoryIT {
         assertAll(
                 () -> assertEquals(fakeFoodDto.getId(), foodEntity.getId()),
                 () -> assertEquals(fakeFoodDto.getName(), foodEntity.getName()),
-                () -> assertEquals(fakeFoodDto.isVegetable(), foodEntity.isVegetable())
+                () -> assertEquals(fakeFoodDto.isVegetable(), foodEntity.isVegetable()),
+                () -> assertEquals(fakeFoodDto.getPrice(), foodEntity.getPrice()),
+                () -> assertEquals(fakeFoodDto.getImageUrl(), foodEntity.getImageUrl())
         );
     }
 
@@ -142,6 +146,8 @@ class FoodRepositoryIT {
                         .deleted(false)
                         .name(fakeFoodDto.getName())
                         .vegetable(fakeFoodDto.isVegetable())
+                        .price(fakeFoodDto.getPrice())
+                        .imageUrl(fakeFoodDto.getImageUrl())
                         .build())
         ).block();
 
@@ -156,6 +162,8 @@ class FoodRepositoryIT {
                         .deleted(false)
                         .name(fakeFoodDto.getName())
                         .vegetable(fakeFoodDto.isVegetable())
+                        .price(fakeFoodDto.getPrice())
+                        .imageUrl(fakeFoodDto.getImageUrl())
                         .build()).block();
 
         // assert
@@ -171,7 +179,6 @@ class FoodRepositoryIT {
         LocalDateTime now = DateUtil.getInstance().convertToLocalDateTime(new Date());
 
         // prepare db, insert first entity
-
         FoodEntity insertedFood = FoodEntity.builder()
                 .id(fakeFoodId)
                 .creationTime(now)
@@ -180,6 +187,8 @@ class FoodRepositoryIT {
                 .deleted(false)
                 .name(fakeFoodDto.getName())
                 .vegetable(fakeFoodDto.isVegetable())
+                .price(fakeFoodDto.getPrice())
+                .imageUrl(fakeFoodDto.getImageUrl())
                 .build();
 
         foodRepository.deleteAll()
@@ -199,7 +208,9 @@ class FoodRepositoryIT {
                 () -> assertEquals(insertedFood.getDeletionTime(), foodEntity.getDeletionTime()),
                 () -> assertEquals(insertedFood.isDeleted(), foodEntity.isDeleted()),
                 () -> assertEquals(insertedFood.getName(), foodEntity.getName()),
-                () -> assertEquals(insertedFood.isVegetable(), foodEntity.isVegetable())
+                () -> assertEquals(insertedFood.isVegetable(), foodEntity.isVegetable()),
+                () -> assertEquals(insertedFood.getPrice(), foodEntity.getPrice()),
+                () -> assertEquals(insertedFood.getImageUrl(), foodEntity.getImageUrl())
         );
     }
 

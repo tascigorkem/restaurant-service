@@ -74,7 +74,9 @@ class FoodControllerTest {
                             assertAll(
                                     () -> assertEquals(fakeFoodDto.getId(), responseDto.getId()),
                                     () -> assertEquals(fakeFoodDto.getName(), responseDto.getName()),
-                                    () -> assertEquals(fakeFoodDto.isVegetable(), responseDto.isVegetable())
+                                    () -> assertEquals(fakeFoodDto.isVegetable(), responseDto.isVegetable()),
+                                    () -> assertEquals(fakeFoodDto.getPrice(), responseDto.getPrice()),
+                                    () -> assertEquals(fakeFoodDto.getImageUrl(), responseDto.getImageUrl())
                             ));
 
                 });
@@ -108,7 +110,9 @@ class FoodControllerTest {
                             () -> assertEquals(HttpStatus.OK.value(), response.getStatusCode()),
                             () -> assertEquals(fakeFoodId, foodResponseDto.getId()),
                             () -> assertEquals(fakeFoodDto.getName(), foodResponseDto.getName()),
-                            () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable())
+                            () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable()),
+                            () -> assertEquals(fakeFoodDto.getPrice(), foodResponseDto.getPrice()),
+                            () -> assertEquals(fakeFoodDto.getImageUrl(), foodResponseDto.getImageUrl())
                     );
                 });
         verify(foodService).getFoodById(fakeFoodId);
@@ -141,7 +145,9 @@ class FoodControllerTest {
                                     () -> assertEquals(HttpStatus.OK, response.getStatus()),
                                     () -> assertEquals(HttpStatus.OK.value(), response.getStatusCode()),
                                     () -> assertEquals(fakeFoodDto.getName(), foodResponseDto.getName()),
-                                    () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable())
+                                    () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable()),
+                                    () -> assertEquals(fakeFoodDto.getPrice(), foodResponseDto.getPrice()),
+                                    () -> assertEquals(fakeFoodDto.getImageUrl(), foodResponseDto.getImageUrl())
                             );
                         }
 
@@ -179,7 +185,9 @@ class FoodControllerTest {
                                     () -> assertEquals(HttpStatus.OK, response.getStatus()),
                                     () -> assertEquals(HttpStatus.OK.value(), response.getStatusCode()),
                                     () -> assertEquals(fakeFoodDto.getName(), foodResponseDto.getName()),
-                                    () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable())
+                                    () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable()),
+                                    () -> assertEquals(fakeFoodDto.getPrice(), foodResponseDto.getPrice()),
+                                    () -> assertEquals(fakeFoodDto.getImageUrl(), foodResponseDto.getImageUrl())
                             );
                         }
 
@@ -214,7 +222,9 @@ class FoodControllerTest {
                                     () -> assertEquals(HttpStatus.OK, response.getStatus()),
                                     () -> assertEquals(HttpStatus.OK.value(), response.getStatusCode()),
                                     () -> assertEquals(fakeFoodDto.getName(), foodResponseDto.getName()),
-                                    () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable())
+                                    () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable()),
+                                    () -> assertEquals(fakeFoodDto.getPrice(), foodResponseDto.getPrice()),
+                                    () -> assertEquals(fakeFoodDto.getImageUrl(), foodResponseDto.getImageUrl())
                             );
                         }
 

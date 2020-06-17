@@ -43,6 +43,8 @@ class FoodServiceIT {
                         .deleted(false)
                         .name(fakeFoodDto.getName())
                         .vegetable(fakeFoodDto.isVegetable())
+                        .price(fakeFoodDto.getPrice())
+                        .imageUrl(fakeFoodDto.getImageUrl())
                         .build()))
                 .block();
 

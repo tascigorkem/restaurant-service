@@ -47,6 +47,8 @@ public class FoodPersistenceAdapter implements FoodPersistencePort {
                 .deleted(false)
                 .name(foodDto.getName())
                 .vegetable(foodDto.isVegetable())
+                .price(foodDto.getPrice())
+                .imageUrl(foodDto.getImageUrl())
                 .build())
                 .map(this::mapToFoodDto);
     }
@@ -60,6 +62,8 @@ public class FoodPersistenceAdapter implements FoodPersistencePort {
             foodEntity.setStatus(Status.UPDATED);
             foodEntity.setName(foodDto.getName());
             foodEntity.setVegetable(foodDto.isVegetable());
+            foodEntity.setPrice(foodDto.getPrice());
+            foodEntity.setImageUrl(foodDto.getImageUrl());
             return foodRepository.save(foodEntity);
         })
                 .switchIfEmpty(
@@ -89,6 +93,8 @@ public class FoodPersistenceAdapter implements FoodPersistencePort {
                 .id(foodEntity.getId())
                 .name(foodEntity.getName())
                 .vegetable(foodEntity.isVegetable())
+                .price(foodEntity.getPrice())
+                .imageUrl(foodEntity.getImageUrl())
                 .build();
     }
 
@@ -97,6 +103,8 @@ public class FoodPersistenceAdapter implements FoodPersistencePort {
                 .id(foodDto.getId())
                 .name(foodDto.getName())
                 .vegetable(foodDto.isVegetable())
+                .price(foodDto.getPrice())
+                .imageUrl(foodDto.getImageUrl())
                 .build();
     }
 }

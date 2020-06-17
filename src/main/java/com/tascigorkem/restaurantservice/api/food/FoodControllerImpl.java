@@ -71,6 +71,8 @@ public class FoodControllerImpl implements FoodController {
                         .id(foodDto.getId())
                         .name(foodDto.getName())
                         .vegetable(foodDto.isVegetable())
+                        .price(foodDto.getPrice())
+                        .imageUrl(foodDto.getImageUrl())
                         .build();
     }
 
@@ -80,6 +82,8 @@ public class FoodControllerImpl implements FoodController {
                 FoodDto.builder()
                         .name(foodControllerRequestDto.getName())
                         .vegetable(foodControllerRequestDto.isVegetable())
+                        .price(foodControllerRequestDto.getPrice())
+                        .imageUrl(foodControllerRequestDto.getImageUrl())
                         .build();
     }
 }

@@ -3,6 +3,7 @@ package com.tascigorkem.restaurantservice.api;
 import com.github.javafaker.Faker;
 import com.tascigorkem.restaurantservice.api.food.FoodControllerRequestDto;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public class ApiModelFaker {
@@ -13,6 +14,8 @@ public class ApiModelFaker {
         return FoodControllerRequestDto.builder()
                 .name(faker.food().dish())
                 .vegetable(faker.bool().bool())
+                .price(BigDecimal.valueOf(faker.number().randomDouble(2, 1, 10)))
+                .imageUrl(faker.internet().url())
                 .build();
     }
 

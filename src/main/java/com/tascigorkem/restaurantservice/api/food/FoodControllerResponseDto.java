@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -16,5 +18,7 @@ public class FoodControllerResponseDto {
     private UUID id;
     private String name;
     private boolean vegetable;
+    private BigDecimal price;
+    private String imageUrl;
 
 }

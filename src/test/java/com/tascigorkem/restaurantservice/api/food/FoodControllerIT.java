@@ -58,7 +58,9 @@ class FoodControllerIT {
                             () -> assertEquals(HttpStatus.OK, response.getStatus()),
                             () -> assertEquals(fakeFoodId, foodResponseDto.getId()),
                             () -> assertEquals(fakeFoodDto.getName(), foodResponseDto.getName()),
-                            () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable())
+                            () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable()),
+                            () -> assertEquals(fakeFoodDto.getPrice(), foodResponseDto.getPrice()),
+                            () -> assertEquals(fakeFoodDto.getImageUrl(), foodResponseDto.getImageUrl())
                     );
                 });
 

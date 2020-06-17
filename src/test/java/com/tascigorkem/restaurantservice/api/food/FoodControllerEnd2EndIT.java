@@ -55,6 +55,8 @@ class FoodControllerEnd2EndIT {
                         .deleted(false)
                         .name(fakeFoodDto.getName())
                         .vegetable(fakeFoodDto.isVegetable())
+                        .price(fakeFoodDto.getPrice())
+                        .imageUrl(fakeFoodDto.getImageUrl())
                         .build()))
                 .block();
 
@@ -75,7 +77,9 @@ class FoodControllerEnd2EndIT {
                             () -> assertEquals(HttpStatus.OK, response.getStatus()),
                             () -> assertEquals(fakeFoodId, foodResponseDto.getId()),
                             () -> assertEquals(fakeFoodDto.getName(), foodResponseDto.getName()),
-                            () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable())
+                            () -> assertEquals(fakeFoodDto.isVegetable(), foodResponseDto.isVegetable()),
+                            () -> assertEquals(fakeFoodDto.getPrice(), foodResponseDto.getPrice()),
+                            () -> assertEquals(fakeFoodDto.getImageUrl(), foodResponseDto.getImageUrl())
                     );
                 });
     }

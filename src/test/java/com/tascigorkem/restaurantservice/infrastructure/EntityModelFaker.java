@@ -6,6 +6,7 @@ import com.tascigorkem.restaurantservice.infrastructure.base.Status;
 import com.tascigorkem.restaurantservice.infrastructure.food.FoodEntity;
 import com.tascigorkem.restaurantservice.util.DateUtil;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
@@ -24,6 +25,8 @@ public class EntityModelFaker {
                 .deleted(false)
                 .name(faker.food().dish())
                 .vegetable(faker.bool().bool())
+                .price(BigDecimal.valueOf(faker.number().randomDouble(2, 1, 10)))
+                .imageUrl(faker.internet().url())
                 .build();
     }
 
