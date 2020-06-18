@@ -28,7 +28,7 @@ Example Flow:
 
 <img src="./docs/hexa-diagram.png" alt="" width="600">
 
-<img src="./docs/project-structure.png" alt="" width="200">
+<img src="./docs/project-structure.png" alt="" width="300">
 
 ## CI & Deployment
 
