@@ -108,6 +108,12 @@ for unit tests and integration tests.
 
 Used Postgres for DB and R2DBC for Postgres for CRUD operations.
 
+Database Schema Generation - Sql: `./src/test/resources/schema.sql`
+
+Database Example Inserts - Sql: `./src/test/resources/inserts.sql`
+
+Database Credentials: `./src/main/resources/application-heroku.properties`
+
 <img src="./docs/diagram.png" alt="javadoc" width="600">
 
 ## Docs
@@ -152,10 +158,12 @@ test'leri çalıştırıyor. `mvn clean install -DskipITs` ile IT'ler skip edili
 **3 -** Spring Reactive Webflux kullandığımdan dolayı DB tarafında JPA, Hibernate kullanamadım. 
 Bunun yerine R2DBC for Postgres kullandım. Bu yüzden `@OneToMany` `@CreationTimestamp` gibi bazı annotation'lar kullanılamadı.
 
-Görkem Taşçı
-
 ## References
 
 https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html
 
 https://docs.spring.io/spring-data/r2dbc/docs/1.1.0.RELEASE/reference/html/#reference
+
+Görkem Taşçı,
+
+2020
