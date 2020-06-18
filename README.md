@@ -76,6 +76,10 @@ Application dockerized via `./Dockerfile` and pushed `DockerHub`.
 
 https://hub.docker.com/r/tascigorkem/restaurant-service
 
+`docker pull tascigorkem/restaurant-service`
+
+`docker run -p 8080:8080 restaurant-service`
+
 ## Tests
 
 Run `mvn integration-test` for Integration Tests (**/*IT.class)
