@@ -48,11 +48,15 @@ Connected `Logentries` distributed tracing tool to Heroku Application for monito
 
 #### Travis CI
 
-Looking `.travis.yml` in beginning to build and takes CI configurations
+Looking `.travis.yml` in beginning to build and takes CI configurations.
+
+`...`
 
 `mvn clean install -DskipITs`
 
-`./docs/travis-ci.pdf`
+``...``
+
+Screenshot: `./docs/travis-ci.pdf`
 
 <img src="./docs/travis-ci.png" alt="" width="800">
 
@@ -62,17 +66,17 @@ Looking `Procfile` (below) in beginning to deploy and takes environment variable
 
 `web: java -Dserver.port=$PORT -Dspring.profiles.active=heroku $JAVA_OPTS -jar target/restaurant-service-0.0.1-SNAPSHOT.jar`
 
-`./docs/heroku-dashboard.pdf`
+Screenshot: `./docs/heroku-dashboard.pdf`
 
 <img src="./docs/heroku.png" alt="" width="800">
 
 #### Logentries
 
-`./docs/logentries-1.pdf`
+Screenshot: `./docs/logentries-1.pdf`
 
-`./docs/logentries-2.pdf`
+Screenshot: `./docs/logentries-2.pdf`
 
-`./docs/logentries-3.pdf`
+Screenshot: `./docs/logentries-3.pdf`
 
 <img src="./docs/logentries-3.png" alt="" width="800">
 
