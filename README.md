@@ -26,17 +26,7 @@ Used hexagonal architecture with TDD for this project.
 
 Example Flow:
 
-`Client <-> ` 
-
-`CompanyController (I) <-> CompanyControllerImpl <->` 
-
-`CompanyService (I) <-> CompanyServiceImpl <-> `
-
-`CompanyPersistencePort (I) <-> CompanyPersistenceAdapter <-> `
-
-`CompanyRepository (I) <-> ReactiveCrudRepository (I) <-> DB <-> `
-
-`DB`
+<img src="./docs/hexa-diagram.png.png" alt="" width="600">
 
 <img src="./docs/project-structure.png" alt="" width="400">
 
@@ -79,6 +69,12 @@ Screenshot: `./docs/logentries-2.pdf`
 Screenshot: `./docs/logentries-3.pdf`
 
 <img src="./docs/logentries-3.png" alt="" width="800">
+
+## Docker
+
+Application dockerized via `./Dockerfile` and pushed `DockerHub`. 
+
+https://hub.docker.com/r/tascigorkem/restaurant-service
 
 ## Tests
 
@@ -138,17 +134,11 @@ https://cb-restaurant-service.herokuapp.com/api-docs
 
 <img src="./docs/get-all-foods-request.png" alt="" width="800">
 
-#### Docker Hub
-
-Application dockerized via `./Dockerfile` and pushed `DockerHub`. 
-
-https://hub.docker.com/r/tascigorkem/restaurant-service
-
 ## Problems
 
-TR:
-
-Zamanım da kısıtlı olduğu için çözemediğim kısımlar:
+Proje gerçekten zorlayıcıydı, geliştirirken oldukça keyif aldım, bazı noktalarda deneyimim pek yoktu 
+ve bu 17 Haziran Salı akşamı geçişimiz olduğu için projeye zaman yaratmakta da zorlandım, 
+bunun sonucunda yaşadığım çözemediğim problemler:
 
 **1 -** Projeyi dockerize ettim, fakat oluşan image'i deploy etmeyi başaramadım. Fakat DockerHub'a push'ladım oradan pull edilebilir.
 Docker image'ı deploy edemeyince docker-compose kullanmak istedim. postgres ve spring boot 
@@ -161,3 +151,11 @@ test'leri çalıştırıyor. `mvn clean install -DskipITs` ile IT'ler skip edili
 
 **3 -** Spring Reactive Webflux kullandığımdan dolayı DB tarafında JPA, Hibernate kullanamadım. 
 Bunun yerine R2DBC for Postgres kullandım. Bu yüzden `@OneToMany` `@CreationTimestamp` gibi bazı annotation'lar kullanılamadı.
+
+Görkem Taşçı
+
+## References
+
+https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html
+
+https://docs.spring.io/spring-data/r2dbc/docs/1.1.0.RELEASE/reference/html/#reference
