@@ -112,7 +112,7 @@ for unit tests and integration tests.
 
 Used Postgres for DB and R2DBC for Postgres for CRUD operations.
 
-<img src="./docs/diagram.png" alt="javadoc" width="800">
+<img src="./docs/diagram.png" alt="javadoc" width="600">
 
 ## Docs
 
