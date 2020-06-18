@@ -26,7 +26,7 @@ Used hexagonal architecture with TDD for this project.
 
 Example Flow:
 
-<img src="./docs/hexa-diagram.png.png" alt="" width="600">
+<img src="./docs/hexa-diagram.png" alt="" width="600">
 
 <img src="./docs/project-structure.png" alt="" width="400">
 
@@ -182,9 +182,28 @@ https://cb-restaurant-service.herokuapp.com/menus/8b03175c-af6c-4cab-a958-70d533
      }
  }
  ```
- https://cb-restaurant-service.herokuapp.com/menus/8b03175c-af6c-4cab-a958-70d53369fe5c/
+https://cb-restaurant-service.herokuapp.com/menus/8b03175c-af6c-4cab-a958-70d53369fe5c/
  
- `GET: /menus/{id}`
+`GET: /menus/{id}`
+ 
+ ```json
+ {
+     "statusCode": 200,
+     "status": "OK",
+     "payload": {
+         "id": "8b03175c-af6c-4cab-a958-70d53369fe5c",
+         "name": "magni",
+         "menuType": "et",
+         "restaurantId": "9d7cfe42-e7dd-44b5-b01b-2fbaa6dd619e"
+     }
+ }
+ ```
+ 
+ 
+https://cb-restaurant-service.herokuapp.com/foods/1a713ef5-0078-452d-958e-770fbb797797
+ 
+`GET: /foods/{id}`
+ 
 
 ```json
 {
