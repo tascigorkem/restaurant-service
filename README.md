@@ -28,7 +28,7 @@ Example Flow:
 
 <img src="./docs/hexa-diagram.png" alt="" width="600">
 
-<img src="./docs/project-structure.png" alt="" width="400">
+<img src="./docs/project-structure.png" alt="" width="200">
 
 ## CI & Deployment
 
@@ -114,7 +114,7 @@ Database Example Inserts - Sql: `./src/test/resources/inserts.sql`
 
 Database Credentials: `./src/main/resources/application-heroku.properties`
 
-<img src="./docs/diagram.png" alt="javadoc" width="600">
+<img src="./docs/diagram.png" alt="javadoc" width="400">
 
 ## Docs
 
