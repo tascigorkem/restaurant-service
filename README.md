@@ -143,7 +143,7 @@ https://cb-restaurant-service.herokuapp.com/api-docs
 ## Problems & Notes
 
 Proje gerçekten zorlayıcıydı, geliştirirken oldukça keyif aldım, bazı noktalarda deneyimim pek yoktu 
-ve bu 17 Haziran Salı akşamı geçişimiz olduğu için projeye zaman yaratmakta da zorlandım, 
+(Spring Reactive Webflux ve Docker) ve bu 17 Haziran Salı akşamı geçişimiz olduğu için projeye zaman yaratmakta da zorlandım, 
 bunun sonucunda yaşadığım çözemediğim problemler ve notlar:
 
 **1 -** Projeyi dockerize ettim, fakat oluşan image'i deploy etmeyi başaramadım. Fakat DockerHub'a push'ladım oradan pull edilebilir.
@@ -152,8 +152,8 @@ uygulamayı tek bir compose dosyasına yazdım. O da lokalde çalışmasına ra�
 burada zaman kaybetmek istemedim.
 
 **2 -** Postgres db'si Heruko üzerinde ayakta olduğu için Travis'te proje ayağa kalkarken integration test'ler
-db'ye ssl hatasından hatasından dolayı erişemiyor ve hata oluyor. Bu Travis'te proje build olurken sadece unit 
-test'leri çalıştırıyor. `mvn clean install -DskipITs` ile IT'ler skip ediliyor.
+db'ye ssl hatasından hatasından dolayı erişemiyor ve connection hatası alıp integration tesleri fail oluyor.
+Bu Travis'te proje build olurken sadece unit test'leri çalıştırıyor. `mvn clean install -DskipITs` ile IT'ler skip ediliyor.
 
 **3 -** Spring Reactive Webflux kullandığımdan dolayı DB tarafında JPA, Hibernate kullanamadım. 
 Bunun yerine R2DBC for Postgres kullandım. Bu yüzden `@OneToMany` `@CreationTimestamp` gibi bazı annotation'lar kullanılamadı.
@@ -162,7 +162,7 @@ Bunun yerine R2DBC for Postgres kullandım. Bu yüzden `@OneToMany` `@CreationTi
 `extended` değeri true ise o `menu` entity'si için `food` entity'sinin üzerindeki `price` kolonunu değil; `menu_food` tablosundaki
 `extended_price` kolonundaki değeri ön tarafa getiriyorum.
 
-Örnek istek: "Scotch Eggs" food kaydının normal fiyarı 20.57, fakat menu'de extend edilmiş ve bu menü için fiyatı 26.56 olmuş.
+**Örnek istek:** "Scotch Eggs" food kaydının normal fiyarı 20.57, fakat menu'de extend edilmiş ve bu menü için fiyatı 26.56 olmuş.
 
 https://cb-restaurant-service.herokuapp.com/menus/8b03175c-af6c-4cab-a958-70d53369fe5c/foods/1a713ef5-0078-452d-958e-770fbb797797
 
