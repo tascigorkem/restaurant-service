@@ -98,13 +98,13 @@ Used patterns:
 
 for unit tests and integration tests.
 
-<img src="./docs/unit-test.png" alt="" width="500">
+<img src="./docs/unit-test.png" alt="" width="800">
 
 #### Test Coverage
 
 98% classes, 96% lines covered in project.
 
-<img src="./docs/test-coverege.png" alt="" width="800">
+<img src="./docs/test-coverege.png" alt="" width="500">
 
 ## Database
 
