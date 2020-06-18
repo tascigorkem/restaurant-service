@@ -9,6 +9,8 @@ public interface MenuFoodPersistencePort {
 
     Flux<MenuFoodDto> getAllMenuFoods();
 
+    Mono<MenuFoodDto> addMenuFood(MenuFoodDto menuFoodDto);
+
     Mono<MenuFoodDto> getFoodPriceInfoByMenuId(UUID menuId, UUID foodId);
 
 }

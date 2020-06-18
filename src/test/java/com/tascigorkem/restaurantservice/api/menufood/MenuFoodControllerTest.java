@@ -1,6 +1,7 @@
 package com.tascigorkem.restaurantservice.api.menufood;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tascigorkem.restaurantservice.api.ApiModelFaker;
 import com.tascigorkem.restaurantservice.api.response.Response;
 import com.tascigorkem.restaurantservice.domain.DomainModelFaker;
 import com.tascigorkem.restaurantservice.domain.menufood.MenuFoodDto;
@@ -101,21 +102,64 @@ public class MenuFoodControllerTest {
                 .expectStatus().isOk()
                 .expectBody(Response.class)
                 .value(response -> {
-                    MenuFoodControllerResponseDto menuResponseDto = objectMapper
+                    MenuFoodControllerResponseDto menuFoodResponseDto = objectMapper
                             .convertValue(response.getPayload(), MenuFoodControllerResponseDto.class);
 
                     assertAll(
                             () -> assertEquals(HttpStatus.OK, response.getStatus()),
                             () -> assertEquals(HttpStatus.OK.value(), response.getStatusCode()),
-                            () -> assertEquals(fakeMenuFoodId, menuResponseDto.getId()),
-                            () -> assertEquals(fakeMenuFoodDto.getMenuId(), menuResponseDto.getMenuId()),
-                            () -> assertEquals(fakeMenuFoodDto.getFoodId(), menuResponseDto.getFoodId()),
-                            () -> assertEquals(fakeMenuFoodDto.getFoodName(), menuResponseDto.getFoodName()),
-                            () -> assertEquals(fakeMenuFoodDto.getOriginalPrice(), menuResponseDto.getOriginalPrice()),
-                            () -> assertEquals(fakeMenuFoodDto.isExtended(), menuResponseDto.isExtended()),
-                            () -> assertEquals(fakeMenuFoodDto.getExtendedPrice(), menuResponseDto.getExtendedPrice())
+                            () -> assertEquals(fakeMenuFoodId, menuFoodResponseDto.getId()),
+                            () -> assertEquals(fakeMenuFoodDto.getMenuId(), menuFoodResponseDto.getMenuId()),
+                            () -> assertEquals(fakeMenuFoodDto.getFoodId(), menuFoodResponseDto.getFoodId()),
+                            () -> assertEquals(fakeMenuFoodDto.getFoodName(), menuFoodResponseDto.getFoodName()),
+                            () -> assertEquals(fakeMenuFoodDto.getOriginalPrice(), menuFoodResponseDto.getOriginalPrice()),
+                            () -> assertEquals(fakeMenuFoodDto.isExtended(), menuFoodResponseDto.isExtended()),
+                            () -> assertEquals(fakeMenuFoodDto.getExtendedPrice(), menuFoodResponseDto.getExtendedPrice())
                     );
                 });
         verify(menuFoodService).getFoodPriceInfoByMenuId(fakeMenuFoodDto.getMenuId(), fakeMenuFoodDto.getFoodId());
     }
+
+    /**
+     * Unit test for MenuFoodController:addMenuFood
+     */
+    @Test
+    void givenMenuFoodControllerRequestDto_whenCreateMenuFood_thenReturnSuccessful_andReturnMenuFood() {
+        // arrange
+        UUID menuId = DomainModelFaker.fakeId();
+        UUID foodId = DomainModelFaker.fakeId();
+        MenuFoodControllerRequestDto fakeMenuFoodControllerRequestDto = ApiModelFaker.getMenuFoodControllerRequestDto();
+        MenuFoodDto fakeMenuFoodDto = subject.mapToMenuFoodDto().apply(fakeMenuFoodControllerRequestDto);
+        fakeMenuFoodDto.setMenuId(menuId);
+        fakeMenuFoodDto.setFoodId(foodId);
+        when(menuFoodService.addMenuFood(fakeMenuFoodDto)).thenReturn(Mono.just(fakeMenuFoodDto));
+        // act
+        client.post().uri("/menus/" + menuId + "/foods/" + foodId)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(fakeMenuFoodControllerRequestDto), MenuFoodControllerRequestDto.class)
+                .exchange()
+
+                // assert
+                .expectStatus().isOk()
+                .expectBody(Response.class)
+                .value(response -> {
+                            MenuFoodControllerResponseDto menuFoodResponseDto = objectMapper
+                                    .convertValue(response.getPayload(), MenuFoodControllerResponseDto.class);
+                            assertAll(
+                                    () -> assertEquals(HttpStatus.OK, response.getStatus()),
+                                    () -> assertEquals(HttpStatus.OK.value(), response.getStatusCode()),
+                                    () -> assertEquals(menuId, menuFoodResponseDto.getMenuId()),
+                                    () -> assertEquals(foodId, menuFoodResponseDto.getFoodId()),
+                                    () -> assertEquals(fakeMenuFoodDto.getFoodName(), menuFoodResponseDto.getFoodName()),
+                                    () -> assertEquals(fakeMenuFoodDto.getOriginalPrice(), menuFoodResponseDto.getOriginalPrice()),
+                                    () -> assertEquals(fakeMenuFoodDto.isExtended(), menuFoodResponseDto.isExtended()),
+                                    () -> assertEquals(fakeMenuFoodDto.getExtendedPrice(), menuFoodResponseDto.getExtendedPrice())
+                            );
+                        }
+
+                );
+        verify(menuFoodService).addMenuFood(fakeMenuFoodDto);
+    }
+
 }

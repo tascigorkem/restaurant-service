@@ -4,7 +4,9 @@ import com.github.javafaker.Faker;
 import com.tascigorkem.restaurantservice.api.company.CompanyControllerRequestDto;
 import com.tascigorkem.restaurantservice.api.food.FoodControllerRequestDto;
 import com.tascigorkem.restaurantservice.api.menu.MenuControllerRequestDto;
+import com.tascigorkem.restaurantservice.api.menufood.MenuFoodControllerRequestDto;
 import com.tascigorkem.restaurantservice.api.restaurant.RestaurantControllerRequestDto;
+import com.tascigorkem.restaurantservice.domain.DomainModelFaker;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -50,7 +52,15 @@ public class ApiModelFaker {
                 .build();
     }
 
+    public static MenuFoodControllerRequestDto getMenuFoodControllerRequestDto() {
+        return MenuFoodControllerRequestDto.builder()
+                .extended(faker.bool().bool())
+                .extendedPrice(DomainModelFaker.fakePrice())
+                .build();
+    }
+
     public static UUID fakeId() {
         return UUID.randomUUID();
     }
+
 }

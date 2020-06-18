@@ -110,5 +110,6 @@ create table menu_food
     food_id        uuid
         constraint menu_food_food_id_fk
             references food
-            on update cascade on delete cascade
+            on update cascade on delete cascade,
+    CONSTRAINT unq_menu_id_food_id UNIQUE(menu_id,food_id)
 );

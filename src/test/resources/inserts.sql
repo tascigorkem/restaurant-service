@@ -18,24 +18,6 @@ INSERT INTO public.company (id, creation_time, update_time, status_type, deleted
 INSERT INTO public.restaurant (id, creation_time, update_time, status_type, deleted, deletion_time, name, address, phone, employee_count, company_id) VALUES ('9d7cfe42-e7dd-44b5-b01b-2fbaa6dd619e', '2020-06-18 00:18:07.755000', '2020-06-18 00:18:07.755000', 'CREATED', false, null, 'et', 'Suite 741 69583 Fadel Mall, Ullrichberg, NY 07740', '(331) 036-4312 x1039', 32, '9f16c55f-56dc-43d7-958c-2ed0aa7bc0e5');
 
 INSERT INTO public.menu (id, creation_time, update_time, status_type, deleted, deletion_time, name, menu_type, restaurant_id) VALUES ('8b03175c-af6c-4cab-a958-70d53369fe5c', '2020-06-18 00:18:07.755000', '2020-06-18 00:18:07.755000', 'CREATED', false, null, 'magni', 'et', '9d7cfe42-e7dd-44b5-b01b-2fbaa6dd619e');
-create table food
-(
-    id            uuid    not null
-        constraint food_pk
-            primary key,
-    creation_time timestamp,
-    update_time   timestamp,
-    status_type   varchar(30),
-    deleted       boolean not null,
-    deletion_time timestamp,
-    name          varchar(255),
-    vegetable     boolean,
-    price         numeric,
-    image_url     varchar(255)
-);
-
-alter table food
-    owner to postgres;
 
 INSERT INTO public.food (id, creation_time, update_time, status_type, deleted, deletion_time, name, vegetable, price, image_url) VALUES ('1a713ef5-0078-452d-958e-770fbb797797', '2020-06-18 00:18:07.755000', '2020-06-18 00:18:07.755000', 'CREATED', false, null, 'Scotch Eggs', false, 20.57, 'www.tonita-langosh.biz');
 

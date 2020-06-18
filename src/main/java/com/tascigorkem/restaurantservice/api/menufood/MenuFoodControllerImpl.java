@@ -23,8 +23,19 @@ public class MenuFoodControllerImpl implements MenuFoodController {
     @Override
     public Mono<Response> getAllMenuFoods() {
         return menuFoodService.getAllMenuFoods()
-                .map(mapToMenuControllerResponseDto())
+                .map(mapToMenuFoodControllerResponseDto())
                 .collectList()
+                .map(Response.ok()::setPayload)
+                .cast(Response.class);
+    }
+
+    @Override
+    public Mono<Response> addMenuFood(UUID menuId, UUID foodId, MenuFoodControllerRequestDto menuFoodControllerRequestDto) {
+        MenuFoodDto menuFoodDto = mapToMenuFoodDto().apply(menuFoodControllerRequestDto);
+        menuFoodDto.setMenuId(menuId);
+        menuFoodDto.setFoodId(foodId);
+        return menuFoodService.addMenuFood(menuFoodDto)
+                .map(mapToMenuFoodControllerResponseDto())
                 .map(Response.ok()::setPayload)
                 .cast(Response.class);
     }
@@ -32,13 +43,13 @@ public class MenuFoodControllerImpl implements MenuFoodController {
     @Override
     public Mono<Response> getFoodPriceInfoByMenuId(UUID menuId, UUID foodId) {
         return menuFoodService.getFoodPriceInfoByMenuId(menuId, foodId)
-                .map(mapToMenuControllerResponseDto())
+                .map(mapToMenuFoodControllerResponseDto())
                 .map(Response.ok()::setPayload)
                 .cast(Response.class);
     }
 
     @Override
-    public Function<MenuFoodDto, MenuFoodControllerResponseDto> mapToMenuControllerResponseDto() {
+    public Function<MenuFoodDto, MenuFoodControllerResponseDto> mapToMenuFoodControllerResponseDto() {
         return menuFoodDto ->
                 MenuFoodControllerResponseDto.builder()
                         .id(menuFoodDto.getId())
@@ -48,6 +59,15 @@ public class MenuFoodControllerImpl implements MenuFoodController {
                         .originalPrice(menuFoodDto.getOriginalPrice())
                         .extended(menuFoodDto.isExtended())
                         .extendedPrice(menuFoodDto.getExtendedPrice())
+                        .build();
+    }
+
+    @Override
+    public Function<MenuFoodControllerRequestDto, MenuFoodDto> mapToMenuFoodDto() {
+        return menuFoodControllerRequestDto ->
+                MenuFoodDto.builder()
+                        .extended(menuFoodControllerRequestDto.isExtended())
+                        .extendedPrice(menuFoodControllerRequestDto.getExtendedPrice())
                         .build();
     }
 }

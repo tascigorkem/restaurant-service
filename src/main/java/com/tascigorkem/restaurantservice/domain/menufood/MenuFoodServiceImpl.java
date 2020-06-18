@@ -22,6 +22,11 @@ public class MenuFoodServiceImpl implements MenuFoodService {
     }
 
     @Override
+    public Mono<MenuFoodDto> addMenuFood(MenuFoodDto menuFoodDto) {
+        return menuFoodPersistencePort.addMenuFood(menuFoodDto);
+    }
+
+    @Override
     public Mono<MenuFoodDto> getFoodPriceInfoByMenuId(UUID menuId, UUID foodId) {
         return menuFoodPersistencePort.getFoodPriceInfoByMenuId(menuId, foodId);
     }

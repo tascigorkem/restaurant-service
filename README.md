@@ -166,11 +166,26 @@ Bunun yerine R2DBC for Postgres kullandım. Bu yüzden `@OneToMany` `@CreationTi
 `extended` değeri true ise o `menu` entity'si için `food` entity'sinin üzerindeki `price` kolonunu değil; `menu_food` tablosundaki
 `extended_price` kolonundaki değeri ön tarafa getiriyorum.
 
-**Örnek istek:** "Scotch Eggs" food kaydının normal fiyarı 20.57, fakat menu'de extend edilmiş ve bu menü için fiyatı 26.56 olmuş.
+**Örnek istek:** Menü altına POST istekle eklenen "Scotch Eggs" food kaydının normal fiyatı 20.57, fakat menu'de extend edilmiş ve bu menü için fiyatı 26.56 olmuş.
 
 https://cb-restaurant-service.herokuapp.com/menus/8b03175c-af6c-4cab-a958-70d53369fe5c/foods/1a713ef5-0078-452d-958e-770fbb797797
 
+
+`POST: /menus/{menuId}/foods/{foodId}`
+
+Request:
+
+```json
+{
+  "extended": true,
+  "extendedPrice": 26.56
+}
+ ```
+
 `GET: /menus/{menuId}/foods/{foodId}`
+
+Response:
+
 ```json
 {
      "statusCode": 200,
@@ -189,7 +204,9 @@ https://cb-restaurant-service.herokuapp.com/menus/8b03175c-af6c-4cab-a958-70d533
 https://cb-restaurant-service.herokuapp.com/menus/8b03175c-af6c-4cab-a958-70d53369fe5c/
  
 `GET: /menus/{id}`
- 
+
+ Response:
+
  ```json
  {
      "statusCode": 200,
@@ -205,7 +222,9 @@ https://cb-restaurant-service.herokuapp.com/menus/8b03175c-af6c-4cab-a958-70d533
  
  
 https://cb-restaurant-service.herokuapp.com/foods/1a713ef5-0078-452d-958e-770fbb797797
- 
+
+Response:
+
 `GET: /foods/{id}`
  
 

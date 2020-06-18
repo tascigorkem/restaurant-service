@@ -119,4 +119,29 @@ class MenuFoodPersistenceAdapterTest {
         );
     }
 
+
+    /**
+     * Unit test for MenuFoodPersistenceAdapter:addMenuFood
+     */
+    @Test
+    void givenMenuFoodControllerRequestDto_whenCreateMenuFood_thenReturnSuccessful_andReturnMenuFood() {
+        // arrange
+        UUID fakeMenuFoodId = DomainModelFaker.fakeId();
+        MenuFoodDto fakeMenuFoodDto = DomainModelFaker.getFakeMenuFoodDto(fakeMenuFoodId);
+        fakeMenuFoodDto.setFoodName(null);
+        fakeMenuFoodDto.setOriginalPrice(null);
+        MenuFoodEntity fakeMenuFoodEntity = subject.mapToMenuFoodEntity(fakeMenuFoodDto);
+        when(menuFoodRepository.save(any(MenuFoodEntity.class))).thenReturn(Mono.just(fakeMenuFoodEntity));
+
+        // act
+        Mono<MenuFoodDto> result = subject.addMenuFood(fakeMenuFoodDto);
+
+        //assert
+        StepVerifier.create(result)
+                .expectNext(fakeMenuFoodDto)
+                .verifyComplete();
+
+        verify(menuFoodRepository).save(any(MenuFoodEntity.class));
+    }
+
 }
