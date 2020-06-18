@@ -48,11 +48,19 @@ Connected `Logentries` distributed tracing tool to Heroku Application for monito
 
 #### Travis CI
 
+Looking `.travis.yml` in beginning to build and takes CI configurations
+
+`mvn clean install -DskipITs`
+
 `./docs/travis-ci.pdf`
 
 <img src="./docs/travis-ci.png" alt="" width="800">
 
 #### Heroku
+
+Looking `Procfile` (below) in beginning to deploy and takes environment variables.
+
+`web: java -Dserver.port=$PORT -Dspring.profiles.active=heroku $JAVA_OPTS -jar target/restaurant-service-0.0.1-SNAPSHOT.jar`
 
 `./docs/heroku-dashboard.pdf`
 
@@ -94,6 +102,14 @@ for unit tests and integration tests.
 
 <img src="./docs/test-coverege.png" alt="" width="500">
 
+## Database
+
+#### Postgres - R2DBC
+
+Used Postgres for DB and R2DBC for Postgres for CRUD operations.
+
+<img src="./docs/diagram.png" alt="javadoc" width="800">
+
 ## Docs
 
 Docs located `./docs` folder in project main folder.
@@ -118,5 +134,26 @@ https://cb-restaurant-service.herokuapp.com/api-docs
 
 <img src="./docs/get-all-foods-request.png" alt="" width="800">
 
+#### Docker Hub
+
+Application dockerized via `./Dockerfile` and pushed `DockerHub`. 
+
+https://hub.docker.com/r/tascigorkem/restaurant-service
+
 ## Problems
 
+TR:
+
+Zamanım da kısıtlı olduğu için çözemediğim kısımlar:
+
+**1 -** Projeyi dockerize ettim, fakat oluşan image'i deploy etmeyi başaramadım. Fakat DockerHub'a push'ladım oradan pull edilebilir.
+Docker image'ı deploy edemeyince docker-compose kullanmak istedim. postgres ve spring boot 
+uygulamayı tek bir compose dosyasına yazdım. O da lokalde çalışmasına rağmen deploy etmeyi başaramadım. Daha fazla 
+burada zaman kaybetmek istemedim.
+
+**2 -** Postgres db'si Heruko üzerinde ayakta olduğu için Travis'te proje ayağa kalkarken integration test'ler
+db'ye ssl hatasından hatasından dolayı erişemiyor ve hata oluyor. Bu Travis'te proje build olurken sadece unit 
+test'leri çalıştırıyor. `mvn clean install -DskipITs` ile IT'ler skip ediliyor.
+
+**3 -** Spring Reactive Webflux kullandığımdan dolayı DB tarafında JPA, Hibernate kullanamadım. 
+Bunun yerine R2DBC for Postgres kullandım. Bu yüzden `@OneToMany` `@CreationTimestamp` gibi bazı annotation'lar kullanılamadı.
