@@ -140,11 +140,11 @@ https://cb-restaurant-service.herokuapp.com/api-docs
 
 <img src="./docs/get-all-foods-request.png" alt="" width="800">
 
-## Problems
+## Problems & Notes
 
 Proje gerçekten zorlayıcıydı, geliştirirken oldukça keyif aldım, bazı noktalarda deneyimim pek yoktu 
 ve bu 17 Haziran Salı akşamı geçişimiz olduğu için projeye zaman yaratmakta da zorlandım, 
-bunun sonucunda yaşadığım çözemediğim problemler:
+bunun sonucunda yaşadığım çözemediğim problemler ve notlar:
 
 **1 -** Projeyi dockerize ettim, fakat oluşan image'i deploy etmeyi başaramadım. Fakat DockerHub'a push'ladım oradan pull edilebilir.
 Docker image'ı deploy edemeyince docker-compose kullanmak istedim. postgres ve spring boot 
@@ -157,6 +157,49 @@ test'leri çalıştırıyor. `mvn clean install -DskipITs` ile IT'ler skip edili
 
 **3 -** Spring Reactive Webflux kullandığımdan dolayı DB tarafında JPA, Hibernate kullanamadım. 
 Bunun yerine R2DBC for Postgres kullandım. Bu yüzden `@OneToMany` `@CreationTimestamp` gibi bazı annotation'lar kullanılamadı.
+
+**4 -** Restaurant tarafından fiyatın ezilip ezilmediğini öğrenmek için `menu_food` tablosundaki `extended` kolonuna bakıyorum. Eğer
+`extended` değeri true ise o `menu` entity'si için `food` entity'sinin üzerindeki `price` kolonunu değil; `menu_food` tablosundaki
+`extended_price` kolonundaki değeri ön tarafa getiriyorum.
+
+Örnek istek: "Scotch Eggs" food kaydının normal fiyarı 20.57, fakat menu'de extend edilmiş ve bu menü için fiyatı 26.56 olmuş.
+
+https://cb-restaurant-service.herokuapp.com/menus/8b03175c-af6c-4cab-a958-70d53369fe5c/foods/1a713ef5-0078-452d-958e-770fbb797797
+
+`GET: /menus/{menuId}/foods/{foodId}`
+```json
+{
+     "statusCode": 200,
+     "status": "OK",
+     "payload": {
+         "id": "c91160e7-0820-425f-8def-17442672c48a",
+         "menuId": "8b03175c-af6c-4cab-a958-70d53369fe5c",
+         "foodId": "1a713ef5-0078-452d-958e-770fbb797797",
+         "foodName": "Scotch Eggs",
+         "originalPrice": 20.57,
+         "extended": true,
+         "extendedPrice": 26.56
+     }
+ }
+ ```
+ https://cb-restaurant-service.herokuapp.com/menus/8b03175c-af6c-4cab-a958-70d53369fe5c/
+ 
+ `GET: /menus/{id}`
+
+```json
+{
+    "statusCode": 200,
+    "status": "OK",
+    "payload": {
+        "id": "1a713ef5-0078-452d-958e-770fbb797797",
+        "name": "Scotch Eggs",
+        "vegetable": false,
+        "price": 20.57,
+        "imageUrl": "www.tonita-langosh.biz"
+    }
+}
+```
+
 
 ## References
 
