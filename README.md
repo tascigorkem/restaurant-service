@@ -104,7 +104,7 @@ for unit tests and integration tests.
 
 98% classes, 96% lines covered in project.
 
-<img src="./docs/test-coverege.png" alt="" width="500">
+<img src="./docs/test-coverege.png" alt="" width="800">
 
 ## Database
 
