@@ -46,8 +46,8 @@ public interface MenuController {
      * Handles the incoming PUT request "/menus/{id}"
      *
      * @param id of the menu to be updated
-     * @param menuControllerRequestDto fields of menu to be added
-     * @return added menu
+     * @param menuControllerRequestDto fields of menu to be updated
+     * @return updated menu
      *
      * @see com.tascigorkem.restaurantservice.api.menu.MenuControllerResponseDto
      */
@@ -58,7 +58,7 @@ public interface MenuController {
      * Handles the incoming DELETE request "/menus/{id}"
      *
      * @param id of the menu to be deleted
-     * @return added menu
+     * @return removed menu
      *
      * @see com.tascigorkem.restaurantservice.api.menu.MenuControllerResponseDto
      */

@@ -46,8 +46,8 @@ public interface CompanyController {
      * Handles the incoming PUT request "/companies/{id}"
      *
      * @param id of the company to be updated
-     * @param companyControllerRequestDto fields of company to be added
-     * @return added company
+     * @param companyControllerRequestDto fields of company to be updated
+     * @return updated company
      *
      * @see com.tascigorkem.restaurantservice.api.company.CompanyControllerResponseDto
      */
@@ -58,7 +58,7 @@ public interface CompanyController {
      * Handles the incoming DELETE request "/companies/{id}"
      *
      * @param id of the company to be deleted
-     * @return added company
+     * @return removed company
      *
      * @see com.tascigorkem.restaurantservice.api.company.CompanyControllerResponseDto
      */

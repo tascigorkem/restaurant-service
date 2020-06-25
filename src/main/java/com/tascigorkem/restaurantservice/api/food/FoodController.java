@@ -45,8 +45,8 @@ public interface FoodController {
      * Handles the incoming PUT request "/foods/{id}"
      *
      * @param id of the food to be updated
-     * @param foodControllerRequestDto fields of food to be added
-     * @return added food
+     * @param foodControllerRequestDto fields of food to be updated
+     * @return updated food
      *
      * @see com.tascigorkem.restaurantservice.api.food.FoodControllerResponseDto
      */
@@ -57,7 +57,7 @@ public interface FoodController {
      * Handles the incoming DELETE request "/foods/{id}"
      *
      * @param id of the food to be deleted
-     * @return added food
+     * @return removed food
      *
      * @see com.tascigorkem.restaurantservice.api.food.FoodControllerResponseDto
      */
