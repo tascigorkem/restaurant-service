@@ -224,9 +224,13 @@ Response:
      }
  }
  ```
- 
- 
 
+## Contributing
+1. Fork it (<https://github.com/tascigorkem/restaurant-service/fork>)
+2. Create your feature branch (`git checkout -b feature/...`)
+3. Commit your changes (`git commit -am 'Add some ...'`)
+4. Push to the branch (`git push origin feature/...`)
+5. Create a new Pull Request
 
 ## References
 
@@ -234,6 +238,8 @@ https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reacti
 
 https://docs.spring.io/spring-data/r2dbc/docs/1.1.0.RELEASE/reference/html/#reference
 
-Görkem Taşçı,
 
-2020
+## License
+Restaurant Service is developed under the [MIT License](LICENSE).
+
+
