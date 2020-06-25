@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+//R: check dirty context
 class CompanyControllerIT {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
