@@ -82,6 +82,8 @@ https://hub.docker.com/r/tascigorkem/restaurant-service
 
 ## Tests
 
+Used JUnit5 & Mockito.
+
 Run `mvn integration-test` for Integration Tests (**/*IT.class)
 
 Run `mvn test` for Unit Tests (**/*Test.class)
