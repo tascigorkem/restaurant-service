@@ -18,7 +18,7 @@
     </a>
 </p>
 
-RESTful Restaurant Service developed with reactive approach (Spring WebFlux and R2DBC - Postgesql) in Spring Boot.
+RESTful Restaurant Service - Hexagonal Architecture with Spring WebFlux and Postgresql R2DBC
 
 ### Hexagonal architecture
 
@@ -26,7 +26,7 @@ Used hexagonal architecture with TDD for this project.
 
 Example Flow:
 
-<img src="./docs/hexa-diagram.png" alt="" width="600">
+<img src="./docs/hexa-diagram.jpg" alt="" width="600">
 
 <img src="./docs/project-structure.png" alt="" width="300">
 
