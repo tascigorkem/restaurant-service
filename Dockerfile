@@ -1,22 +1,23 @@
 #### BUILD image
-FROM maven:3-jdk-11 as builder
-# create app folder for sources
-RUN mkdir -p /build
-WORKDIR /build
-COPY pom.xml /build
-#Download all required dependencies into one layer
+FROM maven:3.6.3-jdk-11-slim as maven-image
+# Create app folder for sources
+RUN mkdir ./project
+WORKDIR /project
+COPY pom.xml .
+# Download all required dependencies into one layer
 RUN mvn -B dependency:resolve dependency:resolve-plugins
-#Copy source code
-COPY src /build/src
-# Build application
-#RUN mvn package
+# Copy source code
+COPY src ./src
+# Package out application
+ARG MAVEN_OPTS
 RUN mvn package -DskipITs
 
 # Just using the build artifact and then removing the build-container
-FROM openjdk:11-jdk-slim as runtime
-MAINTAINER Gorkem Tasci
+FROM adoptopenjdk/openjdk11:alpine-slim as runtime
+LABEL maintainer="Gorkem Tasci"
 
-#Copy executable jar file from the builder image
-COPY --from=builder /build/target/restaurant-service-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8080
+# Copy executable jar file from the builder image and rename it app.jar
+COPY --from=maven-image /project/target/restaurant-service-0.0.1-SNAPSHOT.jar app.jar
+# Set the startup command to execute the jar
 ENTRYPOINT ["java","-jar","app.jar"]
+

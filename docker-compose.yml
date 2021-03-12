@@ -1,58 +1,44 @@
-# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+#Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
 version: '3.8'
 
 #Define services
 services:
 
-  #PostgreSQL Database for the application
+  #PostgreSQL Database
   restaurant-postgres:
     image: "postgres:13"
     restart: always
     container_name: restaurant-postgres
-    #Volume mounted for database for the storage
+    ports:
+      - "5432:5432" #Forward the exposed port 5432 on the container to port 5432 on the host machine
     volumes:
       - restaurant-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432" # Forward the exposed port 5432 on the container to port 5432 on the host machine
 
     #Environment variable for DB name, user and password
     environment:
-      - POSTGRES_DB=restaurant_db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      POSTGRES_DB: restaurant_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
 
-    networks:
-      - main
-
-  #Back-end Spring Boot Application
+  #Flight Booking Service: Spring Boot Application
   restaurant-service:
     #The docker file in restaurant-service build the jar and provides the docker image with the following name.
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
     container_name: restaurant-service
-    expose:
-      - "8080"
+    hostname: restaurant-service
     ports:
-      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
-    links:
-      - restaurant-postgres:restaurant-postgres
+      - "8080:8080"
     depends_on:
       - restaurant-postgres
-#    command: ["./wait-for-postgres.sh", "restaurant-postgres:5432", "--", "python", "app.py"]
-    networks:
-      - main
 
-    #Environment variables for Spring Boot Application.
-#    environment:
-#      - DB_SERVER=restaurant-postgres
-#      - POSTGRES_DB=restaurant_db
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=password
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://restaurant-postgres:5432/restaurant_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
 
 #Volumes for DB data
 volumes:
   restaurant-data:
-
-networks:
-  main:
-    driver: bridge
